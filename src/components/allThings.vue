@@ -17,7 +17,7 @@ export default {
       this.data6.splice(index, 1)
     }
   },
-  data() {
+  data () {
     return {
       columns7: [
         {

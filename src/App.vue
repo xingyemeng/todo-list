@@ -1,20 +1,19 @@
-/* eslint-disable */
 <template>
   <div id="app">
     <div class="layout">
       <Layout>
-        <Header :style="{position: 'fixed', width: '100%'}">
+        <Header :style="{position: 'fixed', width: '100%', zIndex: 999}">
           <Menu mode="horizontal" theme="dark" active-name="1">
             <div class="layout-logo">My Todo App</div>
             <div class="layout-nav">
               <MenuItem name="1">
                 <Icon type="ios-navigate" ></Icon>
-                <router-link to="/allThings" tag="span">所有事项</router-link>
+                <router-link to="/" tag="span">首页</router-link>
               </MenuItem>
               <MenuItem name="2">
                 <Icon type="ios-keypad"></Icon>
                 <Badge dot class="demo-badge"></Badge>
-                <span>待完成</span>
+                <router-link to="/allThings" tag="span"><span>待完成</span></router-link>
               </MenuItem>
               <MenuItem name="3">
                 <Icon type="ios-analytics"></Icon>
@@ -42,6 +41,7 @@
 <script>
 import todoList from './components/todoList'
 import allThings from './components/allThings'
+
 export default {
   name: 'App',
   components: {
