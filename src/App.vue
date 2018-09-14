@@ -13,15 +13,15 @@
               <MenuItem name="2">
                 <Icon type="ios-keypad"></Icon>
                 <Badge dot class="demo-badge"></Badge>
-                <router-link to="/allThings" tag="span"><span>待完成</span></router-link>
+                <router-link to="/undoneThings" tag="span"><span>待完成</span></router-link>
               </MenuItem>
               <MenuItem name="3">
                 <Icon type="ios-analytics"></Icon>
-                已完成
+                <router-link to="/doneThings" tag="span">已完成</router-link>
               </MenuItem>
               <MenuItem name="4">
                 <Icon type="ios-paper"></Icon>
-                已删除
+                <router-link to="/deleteThingsList" tag="span">已删除</router-link>
               </MenuItem>
             </div>
           </Menu>
@@ -40,13 +40,13 @@
 
 <script>
 import todoList from './components/todoList'
-import allThings from './components/allThings'
+import undoneThings from './components/undoneThings'
 
 export default {
   name: 'App',
   components: {
     'todo-list': todoList,
-    allThings
+    undoneThings
   }
 }
 </script>

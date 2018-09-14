@@ -23,15 +23,12 @@
 
 <script>
 import { mapGetters } from 'vuex'
+
 export default {
   data () {
     return {
-      willList: [
-        {id: 0, title: 'm.wbiao.com', text: 'm.wbiao.com添加栏目'},
-        {id: 1, title: '万国手表', text: '万国手表维修流程'},
-        {id: 2, title: '劳力士手表', text: '劳力士手表维修流程'},
-        {id: 3, title: '浪琴手表', text: '浪琴手表维修流程'}
-      ]
+      selectedWill: '',
+      willList: this.$store.state.willList
     }
   },
   computed: {

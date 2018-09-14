@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import allThings from '../components/allThings'
+import undoneThings from '../components/undoneThings'
+import deleteThingsList from '../components/deleteThingsList'
+import doneThings from '../components/doneThings'
 import todoHome from '../components/todoHome'
 
 Vue.use(VueRouter)
@@ -12,8 +14,16 @@ export default new VueRouter({
       component: todoHome
     },
     {
-      path: '/allThings',
-      component: allThings
+      path: '/undoneThings',
+      component: undoneThings
+    },
+    {
+      path: '/doneThings',
+      component: doneThings
+    },
+    {
+      path: '/deleteThingsList',
+      component: deleteThingsList
     }
   ]
 })
