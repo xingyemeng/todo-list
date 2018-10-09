@@ -1,11 +1,17 @@
 <template>
   <div>
+    <div class="bread">
+      <Breadcrumb>
+        <BreadcrumbItem to="/">主页</BreadcrumbItem>
+        <BreadcrumbItem>已删除</BreadcrumbItem>
+      </Breadcrumb>
+    </div>
     <Table border :columns="columns7" :data="deleteThingsList"></Table>
   </div>
 </template>
 
 <script>
-import { mapMutations } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
   name: 'deleteThingsList',
@@ -17,10 +23,7 @@ export default {
         content: `Id：${this.deleteThingsList[index].id}<br>事件名：${this.deleteThingsList[index].title}<br>事情简介：${this.deleteThingsList[index].text}`
       })
     },
-    remove (index) {
-      this.deleteThingsList.splice(index, 1)
-    },
-    ...mapMutations(['deleteThings'])
+    ...mapActions(['restore'])
   },
   data () {
     return {
@@ -70,21 +73,23 @@ export default {
               }, '查看详细'),
               h('Button', {
                 props: {
-                  type: 'error',
+                  type: 'success',
                   size: 'small'
                 },
                 on: {
                   click: () => {
-                    this.deleteThings(params.row.id)
+                    this.restore(params.row.id)
                   }
                 }
-              }, '删除')
+              }, '恢复')
             ])
           }
         }
-      ],
-      deleteThingsList: this.$store.state.deleteThingsList
+      ]
     }
+  },
+  computed: {
+    ...mapGetters(['deleteThingsList'])
   }
 }
 </script>

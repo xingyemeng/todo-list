@@ -1,11 +1,17 @@
 <template>
   <div>
+    <div class="bread">
+      <Breadcrumb>
+        <BreadcrumbItem to="/">主页</BreadcrumbItem>
+        <BreadcrumbItem>待完成</BreadcrumbItem>
+      </Breadcrumb>
+    </div>
     <Table border :columns="columns7" :data="undoneThings"></Table>
   </div>
 </template>
 
 <script>
-import { mapGetters, mapMutations } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
   name: 'undoneThings',
@@ -20,7 +26,7 @@ export default {
     remove (index) {
       this.undoneThings.splice(index, 1)
     },
-    ...mapMutations(['changeThings'])
+    ...mapActions(['changeThings'])
   },
   data () {
     return {

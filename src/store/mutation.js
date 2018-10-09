@@ -6,12 +6,10 @@ export default {
       }
     })
   },
-  deleteThings (state, id) {
-    state.todayList = state.todayList.filter(item => {
-      if (item.id === id) {
-        state.deleteThingsList.push(item)
-      }
-      return item.id !== id
-    })
+  getDeleteThings (state, data) {
+    state.deleteThingsList = data
+  },
+  getTodayList (state, data) {
+    state.todayList = data
   }
 }
