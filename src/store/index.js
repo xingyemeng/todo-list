@@ -2,6 +2,8 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import mutation from './mutation'
 import axios from 'axios'
+import routes from '../router/route'
+import { getNavListByRoutes } from '../libs/util'
 
 Vue.use(Vuex)
 
@@ -33,7 +35,8 @@ const store = new Vuex.Store({
     },
     deleteThingsList: state => {
       return state.deleteThingsList
-    }
+    },
+    navList: state => getNavListByRoutes(routes)
   },
   mutations: mutation,
   actions: {

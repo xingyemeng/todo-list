@@ -2,12 +2,25 @@
   <div class="layout">
     <Layout>
       <Sider ref="side1" hide-trigger collapsible :collapsed-width="78" v-model="isCollapsed">
-        <Menu :active-name="this.$route.path" theme="dark" width="auto" :class="menuitemClasses" @on-select="test">
+        <Menu :active-name="this.$route.path" theme="dark" width="auto" :class="menuitemClasses">
+          <template v-for="nav in navList">
+            <template v-if="nav.children">
+              <Submenu :name="nav.name">
+                <template slot="title">
+                  <Icon type="ios-navigate"></Icon>
+                  {{ nav.name }}
+                </template>
+                <template v-for="item in nav.children">
+                  <MenuItem :name="item.name">{{ item.name }}</MenuItem>
+                </template>
+              </Submenu>
+            </template>
+          </template>
           <MenuItem name="0-1">
             <Icon type="ios-navigate"></Icon>
             <span>用户信息</span>
           </MenuItem>
-          <Submenu name="item1">
+          <Submenu name="item11">
             <template slot="title">
               <Icon type="ios-navigate"></Icon>
               部门一
@@ -16,7 +29,7 @@
             <MenuItem name="item1-2">Option 2</MenuItem>
             <MenuItem name="item1-3">Option 3</MenuItem>
           </Submenu>
-          <Submenu name="item2">
+          <Submenu name="item22">
             <template slot="title">
               <Icon type="ios-keypad"></Icon>
               Item 2
@@ -24,7 +37,7 @@
             <MenuItem name="item2-1">Option 1</MenuItem>
             <MenuItem name="item2-2">Option 2</MenuItem>
           </Submenu>
-          <Submenu name="item3">
+          <Submenu name="item33">
             <template slot="title">
               <Icon type="ios-analytics"></Icon>
               Item 3
@@ -83,7 +96,8 @@ export default {
   data () {
     return {
       activemenu: '',
-      isCollapsed: false
+      isCollapsed: false,
+      navList: this.$store.getters.navList
     }
   },
   computed: {
@@ -104,14 +118,12 @@ export default {
   methods: {
     collapsedSider () {
       this.$refs.side1.toggleCollapse()
-    },
-    test (name) {
-      console.log(name)
     }
   },
   mounted () {
     this.$store.dispatch('getTodayList')
     this.$store.dispatch('getDeleteThings')
+    console.log(this.$store.getters.navList)
   }
 }
 </script>
