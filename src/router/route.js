@@ -9,11 +9,18 @@ export default [
   {
     path: '/',
     component: Main,
+    meta: {
+      hide: true
+    },
     children: [
       {
         path: 'home',
+        name: 'home',
         component: todoHome,
-        meta: {requireAuth: true, hideNav: true},
+        meta: {
+          requireAuth: true,
+          hide: true
+        },
       }
     ]
   },
@@ -23,9 +30,23 @@ export default [
     component: login
   },
   {
-    path: '/login',
-    name: '测试',
-    component: Main
+    path: '/work',
+    name: 'work1',
+    component: Main,
+    meta: {
+      hide: true
+    },
+    children: [
+      {
+        path: 'work-page',
+        name: 'work-page',
+        meta: {
+          title: '工单提交',
+          icon: 'ios-document'
+        },
+        component: doneThings
+      }
+    ]
   },
   {
     path: '/item1',

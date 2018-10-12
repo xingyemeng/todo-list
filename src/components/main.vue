@@ -2,50 +2,7 @@
   <div class="layout">
     <Layout>
       <Sider ref="side1" hide-trigger collapsible :collapsed-width="78" v-model="isCollapsed">
-        <Menu :active-name="this.$route.path" theme="dark" width="auto" :class="menuitemClasses">
-          <template v-for="nav in navList">
-            <template v-if="nav.children">
-              <Submenu :name="nav.name">
-                <template slot="title">
-                  <Icon type="ios-navigate"></Icon>
-                  {{ nav.name }}
-                </template>
-                <template v-for="item in nav.children">
-                  <MenuItem :name="item.name">{{ item.name }}</MenuItem>
-                </template>
-              </Submenu>
-            </template>
-          </template>
-          <MenuItem name="0-1">
-            <Icon type="ios-navigate"></Icon>
-            <span>用户信息</span>
-          </MenuItem>
-          <Submenu name="item11">
-            <template slot="title">
-              <Icon type="ios-navigate"></Icon>
-              部门一
-            </template>
-            <MenuItem name="item1-1">Option 1</MenuItem>
-            <MenuItem name="item1-2">Option 2</MenuItem>
-            <MenuItem name="item1-3">Option 3</MenuItem>
-          </Submenu>
-          <Submenu name="item22">
-            <template slot="title">
-              <Icon type="ios-keypad"></Icon>
-              Item 2
-            </template>
-            <MenuItem name="item2-1">Option 1</MenuItem>
-            <MenuItem name="item2-2">Option 2</MenuItem>
-          </Submenu>
-          <Submenu name="item33">
-            <template slot="title">
-              <Icon type="ios-analytics"></Icon>
-              Item 3
-            </template>
-            <MenuItem name="item3-1">Option 1</MenuItem>
-            <MenuItem name="item3-2">Option 2</MenuItem>
-          </Submenu>
-        </Menu>
+        <side-menu :isCollapsed = 'isCollapsed' :navList="navList"></side-menu>
       </Sider>
       <Layout>
         <Header :style="{padding: 0}" class="layout-header-bar">
@@ -91,6 +48,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import SideMenu from './side-menu/side-menu'
 export default {
   name: 'Main',
   data () {
@@ -100,18 +58,15 @@ export default {
       navList: this.$store.getters.navList
     }
   },
+  components: {
+    SideMenu
+  },
   computed: {
     ...mapGetters(['undoneThings']),
     rotateIcon () {
       return [
         'menu-icon',
         this.isCollapsed ? 'rotate-icon' : ''
-      ]
-    },
-    menuitemClasses () {
-      return [
-        'menu-item',
-        this.isCollapsed ? 'collapsed-menu' : ''
       ]
     }
   },
