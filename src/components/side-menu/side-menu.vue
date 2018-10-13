@@ -1,42 +1,43 @@
 <template>
   <div class="side-menu-wrapper">
-    <Menu :active-name="this.$route.path" theme="dark" width="auto" :class="menuitemClasses" v-if="!isCollapsed">
+    <slot></slot>
+    <Menu :active-name="this.$route.path" theme="dark" width="auto" :class="menuitemClasses" v-show="!isCollapsed">
       <template v-for="nav in navList">
         <template v-if="nav.children && nav.children.length === 1">
-          <MenuItem v-if="nav.meta && nav.meta.hide" :name="nav.children[0].name">
-            <Icon type="ios-navigate"></Icon>
-            <span>{{ nav.children[0].name }}</span>
+          <side-menu-item v-if="showChildren(nav)" :key="`nav-${nav.name}`" :parent-item="nav"></side-menu-item>
+          <MenuItem v-else :key="`nav-${nav.children[0].name}`" :name="nav.children[0].name">
+            <Icon :type="nav.children[0].icon || ''"></Icon>
+            <span>{{ nav.children[0].meta.title }}</span>
           </MenuItem>
-          <Submenu v-else :name="nav.children[0].name">
-            <template slot="title">
-              <Icon type="ios-navigate"></Icon>
-              <span>{{ nav.children[0].name }}</span>
-            </template>
-            <MenuItem :name="nav.children[0].name">{{ nav.children[0].name }}</MenuItem>
-          </Submenu>
         </template>
         <template v-else>
-          <Submenu :name="nav.name">
-            <template slot="title">
-              <Icon type="ios-navigate"></Icon>
-              <span>{{ nav.name }}</span>
-            </template>
-            <template v-for="item in nav.children">
-              <MenuItem :name="item.name">{{ item.name }}</MenuItem>
-            </template>
-          </Submenu>
+          <side-menu-item v-if="showChildren(nav)" :key="`nav-${nav.name}`" :parent-item="nav"></side-menu-item>
+          <MenuItem v-else :key="`nav-${nav.name}`" :name="nav.name">
+            <Icon :type="nav.icon || ''"></Icon>
+            <span>{{ nav.meta.title }}</span>
+          </MenuItem>
         </template>
       </template>
     </Menu>
-    <div v-else>
-      <p :style="{color: '#ffffff'}">123123123123123122</p>
+    <div  v-show="isCollapsed">
+      <template v-for="item in navList">
+        <collapsed-menu v-if="item.children && (item.children.length > 1 || (item.meta && item.meta.showAlways))" :parent-item="item"></collapsed-menu>
+        <p v-else style="color:#fff">{{item.name}}</p>
+      </template>
     </div>
   </div>
 </template>
 
 <script>
+  import SideMenuItem from './side-menu-item'
+  import CollapsedMenu from './collapsedMenu'
+
   export default {
     name: "SideMenu",
+    components: {
+      SideMenuItem,
+      CollapsedMenu
+    },
     data () {
       return {
 
@@ -57,6 +58,11 @@
           'menu-item',
           this.isCollapsed ? 'collapsed-menu' : ''
         ]
+      }
+    },
+    methods: {
+      showChildren(item){
+        return item.children && (item.children.length > 1 || (item.meta && item.meta.showAlways))
       }
     }
   }
@@ -93,5 +99,8 @@
     transition: font-size .2s ease .2s, transform .2s ease .2s;
     vertical-align: middle;
     font-size: 22px;
+  }
+  .side-menu-wrapper .logo-con img{
+    width: 100%;
   }
 </style>

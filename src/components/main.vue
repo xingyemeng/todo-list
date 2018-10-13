@@ -2,7 +2,12 @@
   <div class="layout">
     <Layout>
       <Sider ref="side1" hide-trigger collapsible :collapsed-width="78" v-model="isCollapsed">
-        <side-menu :isCollapsed = 'isCollapsed' :navList="navList"></side-menu>
+        <side-menu :isCollapsed = 'isCollapsed' :navList="navList">
+          <div class="logo-con">
+            <img v-show="!isCollapsed" :src="maxLogo" key="max-logo" />
+            <img v-show="isCollapsed" :src="minLogo" key="min-logo" />
+          </div>
+        </side-menu>
       </Sider>
       <Layout>
         <Header :style="{padding: 0}" class="layout-header-bar">
@@ -49,13 +54,18 @@
 <script>
 import { mapGetters } from 'vuex'
 import SideMenu from './side-menu/side-menu'
+import minLogo from '../assets/images/logo-min.jpg'
+import maxLogo from '../assets/images/logo.jpg'
+
 export default {
   name: 'Main',
   data () {
     return {
       activemenu: '',
       isCollapsed: false,
-      navList: this.$store.getters.navList
+      navList: this.$store.getters.navList,
+      maxLogo,
+      minLogo
     }
   },
   components: {
