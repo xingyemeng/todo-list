@@ -72,7 +72,7 @@ export default [
         name: 'iteme1-1',
         meta: {
           icon: 'md-menu',
-          title: 'iteme1-1'
+          title: '网站系统'
         },
         component: deleteThingsList
       },

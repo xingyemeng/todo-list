@@ -1,23 +1,26 @@
 <template>
-  <Row>
-    <Col :xs="{ span: 11, offset: 7 }" :lg="{ span: 6, offset: 10 }">
-      <Form ref="formInline" :model="formInline" :rules="ruleInline" inline>
-        <FormItem prop="user">
-          <Input type="text" v-model="formInline.user" placeholder="Username">
-          <Icon type="ios-person-outline" slot="prepend"></Icon>
-          </Input>
-        </FormItem>
-        <FormItem prop="password">
-          <Input type="password" v-model="formInline.password" placeholder="Password">
-          <Icon type="ios-lock-outline" slot="prepend"></Icon>
-          </Input>
-        </FormItem>
-        <FormItem>
-          <Button type="primary" @click="handleSubmit('formInline')">Signin</Button>
-        </FormItem>
-      </Form>
-    </Col>
-  </Row>
+  <div class="login">
+    <div class="login-con">
+      <Card>
+        <p slot="title">精时恒达工单系统</p>
+        <Form ref="formInline" :model="formInline" :rules="ruleInline"  @keydown.enter.native="handleSubmit">
+          <FormItem prop="user">
+            <Input type="text" v-model="formInline.user" placeholder="Username">
+            <Icon type="ios-person" size="16" slot="prepend"></Icon>
+            </Input>
+          </FormItem>
+          <FormItem prop="password">
+            <Input type="password" v-model="formInline.password" placeholder="Password">
+            <Icon type="ios-lock" size="16" slot="prepend"></Icon>
+            </Input>
+          </FormItem>
+          <FormItem>
+            <Button type="primary" @click="handleSubmit('formInline')" long>登录</Button>
+          </FormItem>
+        </Form>
+      </Card>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -32,10 +35,10 @@ export default {
       },
       ruleInline: {
         user: [
-          { required: true, message: 'Please fill in the user name', trigger: 'blur' }
+          { required: true, message: '用户名不能为空', trigger: 'blur' }
         ],
         password: [
-          { required: true, message: 'Please fill in the password.', trigger: 'blur' },
+          { required: true, message: '密码不能为空', trigger: 'blur' },
           { type: 'string', min: 4, message: 'The password length cannot be less than 5 bits', trigger: 'blur' }
         ]
       }
@@ -63,5 +66,15 @@ export default {
 </script>
 
 <style scoped>
-
+  .login{
+    position: relative;
+    background: url("../../assets/images/login-bg.jpg");
+    height: 100%;
+  }
+  .login-con{
+    position: absolute;
+    width: 300px;
+    right: 200px;
+    top: 400px;
+  }
 </style>

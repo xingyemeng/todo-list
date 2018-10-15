@@ -1,36 +1,50 @@
 <template>
-  <Dropdown>
-    <dropdown transfer placement="right-end">
-      <a href="javascript:void(0)">
-        <icon :type="parentItem.icon"></icon>
-      </a>
-      <dropdown-menu slot="list">
-        <dropdown-item>驴打滚</dropdown-item>
-        <dropdown-item>炸酱面</dropdown-item>
-        <dropdown-item>豆汁儿</dropdown-item>
-        <dropdown placement="right-start">
-          <dropdown-item>
-            北京烤鸭
-            <icon type="ios-arrow-forward"></icon>
-          </dropdown-item>
-          <dropdown-menu slot="list">
-            <dropdown-item>挂炉烤鸭</dropdown-item>
-            <dropdown-item>焖炉烤鸭</dropdown-item>
-          </dropdown-menu>
-        </dropdown>
-        <dropdown-item>冰糖葫芦</dropdown-item>
-      </dropdown-menu>
-    </dropdown>
-  </Dropdown>
+  <dropdown transfer :placement="placement">
+    <a href="javascript:void(0)" :class="!hideTitle ? 'drop-menu-a' : ''">
+      <span v-if="!hideTitle">{{ parentItem.meta.title }}</span>
+      <icon v-else :type="parentItem.icon" size="30" color="#fff" style="padding: 6px 22px"></icon>
+    </a>
+    <dropdown-menu slot="list">
+      <template v-for="child in parentItem.children">
+        <collapsedMenu v-if="child.children && (child.children.length >1 || (child.meta && child.meta.showAlways))" :parent-item="child"></collapsedMenu>
+        <dropdown-item v-else>{{ child.meta.title }}</dropdown-item>
+      </template>
+    </dropdown-menu>
+  </dropdown>
 </template>
 
 <script>
   export default {
     name: "collapsedMenu",
-    props: ['parentItem']
+    props: {
+      hideTitle: {
+        type: Boolean,
+        default: false
+      },
+      parentItem: Array
+    },
+    data () {
+      return {
+        placement: 'right-start'
+      }
+    }
   }
 </script>
 
 <style scoped>
-
+  .ivu-dropdown-transfer .ivu-dropdown{
+    width: 100%;
+    margin: 0;
+    line-height: normal;
+    padding: 7px 0 7px 16px;
+    font-size: 12px!important;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: background .2s ease-in-out;
+  }
+  .drop-menu-a{
+    display: inline-block;
+    width: 100%;
+    color: #515a6e;
+  }
 </style>

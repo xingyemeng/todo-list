@@ -1,5 +1,12 @@
 @font-face {
   font-display: fallback;
 }
+html,body{
+  width: 100%;
+  height: 100%;
+}
+#app{
+  height: 100%;
+}
 li{list-style: none}
 .bread{margin: 20px}

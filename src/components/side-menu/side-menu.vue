@@ -19,10 +19,12 @@
         </template>
       </template>
     </Menu>
-    <div  v-show="isCollapsed">
+    <div class="side-menu-collapsed" v-show="isCollapsed">
       <template v-for="item in navList">
-        <collapsed-menu v-if="item.children && (item.children.length > 1 || (item.meta && item.meta.showAlways))" :parent-item="item"></collapsed-menu>
-        <p v-else style="color:#fff">{{item.name}}</p>
+        <collapsed-menu v-if="item.children && item.children.length > 1 " hide-title :parent-item="item"></collapsed-menu>
+        <Tooltip v-else :content="(item.meta && item.meta.title) || (item.children && item.children[0] && item.children[0].meta.title)" placement="left">
+          <Icon :type="item.icon || (item.children && item.children[0].icon)" size="30" color="#fff" style="padding:6px 22px"></Icon>
+        </Tooltip>
       </template>
     </div>
   </div>
@@ -102,5 +104,6 @@
   }
   .side-menu-wrapper .logo-con img{
     width: 100%;
+    padding: 10%;
   }
 </style>
