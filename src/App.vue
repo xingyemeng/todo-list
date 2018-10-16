@@ -14,6 +14,7 @@ export default {
   #app{
       width: 100%;
       margin: 0 auto;
+      height: 100%;
   }
   #app h1{
     text-align: center;

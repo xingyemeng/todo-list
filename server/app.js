@@ -21,9 +21,10 @@ app.use(session({
   store.length(function (err, len) {
     console.log(len)
     if(len) {
-      store.get(req.sessionID, function (err, session) {
+      /!*store.get(req.sessionID, function (err, session) {
         console.log(session)
-      })
+      })*!/
+      console.log(req.session)
     }
   })
   console.log(req.sessionID);
@@ -47,6 +48,12 @@ mongoose.connect('mongodb://localhost:27017/todolist',{useNewUrlParser: true},fu
       ]
     }
   ])*/
+/*  Users.findOne({name: 'gust'}, function (err, user) {
+    if (err) console.error(err)
+    global.acl.addUserRoles(user._id.toString(),'admin', function (err) {
+      if(err) console.error(err)
+    })
+  })*/
   app.use('/admin', require('./router/login'));
   app.use('/things', require('./router/things'));
   app.listen(8081);

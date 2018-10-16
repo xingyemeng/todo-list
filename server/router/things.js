@@ -4,12 +4,12 @@ const AllThings = require('../models/allThings');
 const router = express.Router();
 
 function getUserId(req, res){
-  console.log(req);
   return req.session.role
 }
 router.all('*', global.acl.middleware( 1, getUserId ),function (req,res,next) {
   next()
 })
+
 router.get('/getAllThings', function(req, res) {
 
   AllThings.find({flag: true}, function(err, allThings){

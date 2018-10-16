@@ -1,6 +1,6 @@
 <template>
   <div class="layout">
-    <Layout>
+    <Layout style="height: 100%">
       <Sider ref="side1" hide-trigger collapsible :collapsed-width="78" v-model="isCollapsed">
         <side-menu :isCollapsed = 'isCollapsed' :navList="navList">
           <div class="logo-con">
@@ -16,36 +16,6 @@
         <Content :style="{margin: '20px', background: '#fff', minHeight: '260px'}">
           <router-view></router-view>
         </Content>
-      </Layout>
-      <Layout>
-        <Header :style="{position: 'fixed', width: '100%', zIndex: 999}">
-          <Menu ref="menu" mode="horizontal" theme="dark" :active-name="this.$route.path">
-            <div class="layout-logo">My Todo App</div>
-            <div class="layout-nav">
-              <MenuItem name="/home" to="/home">
-                <Icon type="ios-navigate"></Icon>
-                首页
-              </MenuItem>
-              <MenuItem name="/undoneThings/1" to="/undoneThings/1">
-                <Icon type="ios-keypad"></Icon>
-                <Badge dot class="demo-badge" v-if="undoneThings.length !== 0"></Badge>
-                待完成
-              </MenuItem>
-              <MenuItem name="/doneThings/1" to="/doneThings/1">
-                <Icon type="ios-analytics"></Icon>
-                已完成
-              </MenuItem>
-              <MenuItem name="/deleteThingsList/1" to="/deleteThingsList/1">
-                <Icon type="ios-paper"></Icon>
-                已删除
-              </MenuItem>
-            </div>
-          </Menu>
-        </Header>
-        <Content :style="{margin: '88px 20px 0', background: '#fff', minHeight: '500px'}">
-          <router-view></router-view>
-        </Content>
-        <Footer class="layout-footer-center">2011-2016 &copy; TalkingData</Footer>
       </Layout>
     </Layout>
   </div>
@@ -100,6 +70,7 @@ export default {
   position: relative;
   border-radius: 4px;
   overflow: hidden;
+  height: 100%;
 }
 .layout-logo{
   width: 100px;

@@ -35,7 +35,6 @@ export default [
         name: 'home',
         component: todoHome,
         meta: {
-          requireAuth: true,
           hideInMenu: true,
           title: '首页'
         },

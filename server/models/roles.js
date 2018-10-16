@@ -16,14 +16,14 @@ let rolesSchema = new Schema({
 
 module.exports = Roles = mongoose.model('role', rolesSchema);
 
-/*
-const arr = [
+/*const arr = [
   {name: 'admin'},
-  {name: 'user'},
-  {name: 'gust'}
+  {name: 'semadmin'},
+  {name: 'semuser'},
+  {name: 'tecadmin'},
+  {name: 'tecuser'}
 ]
 
 Roles.create(arr, function (err, list) {
   console.log(list)
-})
-*/
+})*/

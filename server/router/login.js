@@ -9,8 +9,12 @@ router.post('/login', function (req, res) {
     if (err) console.error(err);
     if(user){
       if(user.password === data.password){
-        req.session.role = data.user;
-        res.send(user)
+        req.session.role = user._id.toString();
+        console.log(user._id.toString())
+        global.acl.userRoles('admin', function (err, roles) {
+          if(err) console.error(err)
+          res.send(roles)
+        })
       }else{
         res.send('密码错误')
       }
