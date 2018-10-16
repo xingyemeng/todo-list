@@ -1,7 +1,16 @@
 const mongoose = require('mongoose');
 let Schema = mongoose.Schema;
-
-const allThingsSchema = new Schema({
+/*
+* done: 工单是否完成
+* flag: 审核
+* time: 提交时间
+* data: 期待完成时间
+* group: 工单所属组
+* author: 提交人
+* getter: 对应的技术
+*
+* */
+const worksSchema = new Schema({
   id: Number,
   title: String,
   text: String,
@@ -19,13 +28,14 @@ const allThingsSchema = new Schema({
     default: new Date()
   },
   date: Date,
-  muser: String,
-  guser: String
+  group: String,
+  author: String,
+  getter: String
 })
-AllThings = mongoose.model('allThings', allThingsSchema);
+Works = mongoose.model('works', worksSchema);
 
 
-module.exports = AllThings
+module.exports = Works
 /*const arr = [
   {
     "id" : 0,

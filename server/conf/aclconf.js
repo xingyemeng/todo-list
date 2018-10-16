@@ -1,8 +1,20 @@
 const aclconf = [
   {
-    roles:['admin'],
+    roles:['semuser', 'tecuser'],
     allows:[
-      {resources:'/things', permissions:'get'}
+      {resources: [ '/work/view', '/work/errwork', '/postwork' ], permissions:'*'}
+    ]
+  },
+  {
+    roles:['tecuser'],
+    allows:[
+      {resources: [ '/work/view'  ], permissions:'*'}
+    ]
+  },
+  {
+    roles:['semadmin', 'tecadmin'],
+    allows:[
+      {resources: [ '/work/verify', '/work/group' ], permissions:'*'}
     ]
   }
 ]

@@ -6,6 +6,7 @@ const session = require('express-session');
 const MemoryStore = require('memorystore')(session);
 const Roles = require('./models/roles');
 const Resources = require('./models/resources');
+const acl_conf = require('./conf/aclconf')
 
 const app = express();
 const store = new MemoryStore();
@@ -40,14 +41,7 @@ app.use(session({
 
 mongoose.connect('mongodb://localhost:27017/todolist',{useNewUrlParser: true},function (err) {
   global.acl = new nodeAcl(new nodeAcl.mongodbBackend(mongoose.connection.db), logger());
-/*  global.acl.allow([
-    {
-      roles:['admin'],
-      allows:[
-        {resources:'/things', permissions:'get'}
-      ]
-    }
-  ])*/
+  global.acl.allow(acl_conf)
 /*  Users.findOne({name: 'gust'}, function (err, user) {
     if (err) console.error(err)
     global.acl.addUserRoles(user._id.toString(),'admin', function (err) {

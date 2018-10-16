@@ -1,5 +1,5 @@
 const express = require('express');
-const AllThings = require('../models/allThings');
+const AllThings = require('../models/works');
 
 const router = express.Router();
 
