@@ -53,97 +53,83 @@ export default [
           title: '工单提交',
           icon: 'ios-document'
         },
-        component: doneThings
+        component: todoHome
       }
     ]
   },
   {
-    path: '/item1',
-    name: 'item1',
+    path: '/work',
+    name: 'work',
     meta: {
       icon: 'md-menu',
-      title: '多级菜单'
+      title: '竞价'
     },
     component: Main,
     children: [
       {
-        path: 'item1-1',
-        name: 'iteme1-1',
+        path: 'workview',
+        name: 'workview',
         meta: {
           icon: 'md-menu',
-          title: '网站系统'
+          title: '查看工单'
         },
-        component: deleteThingsList
+        component: () => import('../components/works/workview')
       },
       {
-        path: 'item1-2',
-        name: 'iteme1-2',
+        path: 'errwork',
+        name: 'errwork',
         meta: {
           icon: 'md-menu',
-          title: 'iteme1-2',
+          title: '不合格工单',
           showAlways: true
         },
-        component: undoneThings,
-        children: [
-          {
-            path: 'item1-2-1',
-            name: 'item1-2-1',
-            meta: {
-              icon: 'md-menu',
-              title: 'iteme1-2-1'
-            },
-            component: doneThings
-          }
-        ]
+        component: undoneThings
       },
       {
-        path: 'item1-3',
-        name: 'iteme1-3',
+        path: 'workverify',
+        name: 'workverify',
         meta: {
           icon: 'md-menu',
-          title: 'iteme1-3'
+          title: '工单审核'
+        },
+        component: doneThings
+      },
+      {
+        path: 'groupwork',
+        name: 'groupwork',
+        meta: {
+          icon: 'md-menu',
+          title: '部门统计'
         },
         component: doneThings
       }
     ]
   },
   {
-    path: '/item2',
-    name: 'item2',
+    path: '/tec',
+    name: 'tec',
     meta: {
       icon: 'md-menu',
-      title: 'iteme2',
+      title: '技术',
       showAlways: true
     },
     component: Main,
     children: [
       {
-        path: 'item2-1',
-        name: 'item2-1',
+        path: 'workview',
+        name: 'tecview',
         meta: {
           icon: 'md-menu',
-          title: 'iteme2-1'
+          title: '查看工单'
         },
         component: doneThings
-      }
-    ]
-  },
-  {
-    path: '/item3',
-    name: 'item3',
-    meta: {
-      icon: 'md-menu',
-      title: 'iteme3',
-      showAlways: true
-    },
-    component: Main,
-    children: [
+      },
       {
-        path: 'item3-1',
-        name: 'item3-1',
+        path: 'groupwork',
+        name: 'grouptecwork',
         meta: {
           icon: 'md-menu',
-          title: 'iteme3-1'
+          title: '部门统计'
         },
         component: doneThings
       }

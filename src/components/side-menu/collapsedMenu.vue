@@ -14,21 +14,21 @@
 </template>
 
 <script>
-  export default {
-    name: "collapsedMenu",
-    props: {
-      hideTitle: {
-        type: Boolean,
-        default: false
-      },
-      parentItem: Array
+export default {
+  name: "collapsedMenu",
+  props: {
+    hideTitle: {
+      type: Boolean,
+      default: false
     },
-    data () {
-      return {
-        placement: 'right-start'
-      }
+    parentItem: Object
+  },
+  data () {
+    return {
+      placement: 'right-start'
     }
   }
+}
 </script>
 
 <style scoped>

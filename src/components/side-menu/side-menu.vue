@@ -1,7 +1,7 @@
 <template>
   <div class="side-menu-wrapper">
     <slot></slot>
-    <Menu :active-name="this.$route.path" theme="dark" width="auto" :class="menuitemClasses" v-show="!isCollapsed">
+    <Menu :active-name="this.$route.path" theme="dark" width="auto" :class="menuitemClasses" v-show="!isCollapsed" @on-select="handleSelect">
       <template v-for="nav in navList">
         <template v-if="nav.children && nav.children.length === 1">
           <side-menu-item v-if="showChildren(nav)" :key="`nav-${nav.name}`" :parent-item="nav"></side-menu-item>
@@ -65,6 +65,9 @@
     methods: {
       showChildren(item){
         return item.children && (item.children.length > 1 || (item.meta && item.meta.showAlways))
+      },
+      handleSelect(name){
+        return this.$emit('on-select', name)
       }
     }
   }

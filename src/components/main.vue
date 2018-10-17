@@ -2,7 +2,7 @@
   <div class="layout">
     <Layout style="height: 100%">
       <Sider ref="side1" hide-trigger collapsible :collapsed-width="78" v-model="isCollapsed">
-        <side-menu :isCollapsed = 'isCollapsed' :navList="navList">
+        <side-menu :isCollapsed = 'isCollapsed' :navList="navList" @on-select="turnToName">
           <div class="logo-con">
             <img v-show="!isCollapsed" :src="maxLogo" key="max-logo" />
             <img v-show="isCollapsed" :src="minLogo" key="min-logo" />
@@ -53,6 +53,9 @@ export default {
   methods: {
     collapsedSider () {
       this.$refs.side1.toggleCollapse()
+    },
+    turnToName (name) {
+      this.$router.push({name: name})
     }
   },
   mounted () {

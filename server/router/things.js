@@ -3,12 +3,12 @@ const AllThings = require('../models/works');
 
 const router = express.Router();
 
-function getUserId(req, res){
+/*function getUserId(req, res){
   return req.session.role
 }
 router.all('*', global.acl.middleware( 1, getUserId ),function (req,res,next) {
   next()
-})
+})*/
 
 router.get('/getAllThings', function(req, res) {
 

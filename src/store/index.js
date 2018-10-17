@@ -4,6 +4,7 @@ import mutation from './mutation'
 import axios from 'axios'
 import routes from '../router/route'
 import { getNavListByRoutes } from '../libs/util'
+import user from './module/user'
 
 Vue.use(Vuex)
 
@@ -36,7 +37,7 @@ const store = new Vuex.Store({
     deleteThingsList: state => {
       return state.deleteThingsList
     },
-    navList: state => getNavListByRoutes(routes)
+    navList: () => getNavListByRoutes(routes)
   },
   mutations: mutation,
   actions: {
@@ -113,6 +114,9 @@ const store = new Vuex.Store({
     * }
     * 最后使用localStorage解决
     */
+  },
+  modules: {
+    user
   }
 })
 

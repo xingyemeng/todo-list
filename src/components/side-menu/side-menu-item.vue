@@ -2,7 +2,7 @@
   <Submenu :name="parentItem.name">
     <template slot="title">
       <Icon :type="parentItem.icon"></Icon>
-      <span>{{ parentItem.name }}</span>
+      <span>{{ parentItem.meta.title }}</span>
     </template>
     <template v-for="item in parentItem.children">
       <template v-if="item.children && item.children.length ===1">

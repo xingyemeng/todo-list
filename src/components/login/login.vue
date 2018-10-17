@@ -15,7 +15,7 @@
             </Input>
           </FormItem>
           <FormItem>
-            <Button type="primary" @click="handleSubmit('formInline')" long>登录</Button>
+            <Button type="primary" @click="handleSubmit" long>登录</Button>
           </FormItem>
         </Form>
       </Card>
@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import axios from 'axios'
+import { mapActions  } from 'vuex'
 export default {
   name: 'login',
   data () {
@@ -45,13 +45,13 @@ export default {
     }
   },
   methods: {
-    handleSubmit (name) {
-      this.$refs[name].validate((valid) => {
+    ...mapActions([ 'handleLogin' ]),
+    handleSubmit () {
+      this.$refs['formInline'].validate((valid) => {
         if (valid) {
-          axios.post('/api/admin/login', this.formInline)
-            .then(function (response) {
-              console.log(response)
-              this.$Message.success('Success!')
+          this.handleLogin(this.formInline)
+            .then( (res) => {
+              this.$router.push({name: 'home'})
             })
             .catch(function (error) {
               console.log(error)

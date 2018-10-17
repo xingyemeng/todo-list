@@ -9,9 +9,8 @@ router.post('/login', function (req, res) {
     if (err) console.error(err);
     if(user){
       if(user.password === data.password){
-        req.session.role = user._id.toString();
-        console.log(user._id.toString())
-        global.acl.userRoles('admin', function (err, roles) {
+        req.session.userid = user._id.toString();
+        global.acl.userRoles(user._id.toString(), function (err, roles) {
           if(err) console.error(err)
           res.send(roles)
         })
