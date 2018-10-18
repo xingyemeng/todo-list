@@ -19,6 +19,7 @@
     "express": "^4.16.3",
     "express-session": "^1.15.6",
     "iview": "^3.1.0",
+    "js-cookie": "^2.2.0",
     "memorystore": "^1.6.0",
     "mongoose": "^5.2.14",
     "vue": "^2.5.2",

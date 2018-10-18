@@ -1,11 +1,11 @@
 <template>
-    
+  <div></div>
 </template>
 
 <script>
-  export default {
-    name: "workview"
-  }
+export default {
+  name: 'workview'
+}
 </script>
 
 <style scoped>

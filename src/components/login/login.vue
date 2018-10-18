@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import { mapActions  } from 'vuex'
+import {mapActions} from 'vuex'
 export default {
   name: 'login',
   data () {
@@ -50,11 +50,11 @@ export default {
       this.$refs['formInline'].validate((valid) => {
         if (valid) {
           this.handleLogin(this.formInline)
-            .then( (res) => {
+            .then((res) => {
               this.$router.push({name: 'home'})
             })
-            .catch(function (error) {
-              console.log(error)
+            .catch((error) => {
+              this.$Message.error(error.data)
             })
         } else {
           this.$Message.error('Fail!')

@@ -1,4 +1,5 @@
 <template>
+  <!--eslint-disable-->
   <dropdown transfer :placement="placement">
     <a href="javascript:void(0)" :class="!hideTitle ? 'drop-menu-a' : ''">
       <span v-if="!hideTitle">{{ parentItem.meta.title }}</span>
@@ -15,7 +16,7 @@
 
 <script>
 export default {
-  name: "collapsedMenu",
+  name: 'collapsedMenu',
   props: {
     hideTitle: {
       type: Boolean,

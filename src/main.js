@@ -4,7 +4,7 @@ import router from './router'
 import iView from 'iview'
 import 'iview/dist/styles/iview.css'
 import './assets/common.css'
-import store from './store'
+import store from './store/index'
 import upperFirst from 'lodash/upperFirst'
 import camelCase from 'lodash/camelCase'
 

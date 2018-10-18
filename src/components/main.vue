@@ -61,7 +61,6 @@ export default {
   mounted () {
     this.$store.dispatch('getTodayList')
     this.$store.dispatch('getDeleteThings')
-    console.log(this.$store.getters.navList)
   }
 }
 </script>

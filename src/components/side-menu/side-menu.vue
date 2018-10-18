@@ -1,4 +1,5 @@
 <template>
+  <!--eslint-disable-->
   <div class="side-menu-wrapper">
     <slot></slot>
     <Menu :active-name="this.$route.path" theme="dark" width="auto" :class="menuitemClasses" v-show="!isCollapsed" @on-select="handleSelect">
@@ -31,46 +32,46 @@
 </template>
 
 <script>
-  import SideMenuItem from './side-menu-item'
-  import CollapsedMenu from './collapsedMenu'
+import SideMenuItem from './side-menu-item'
+import CollapsedMenu from './collapsedMenu'
 
-  export default {
-    name: "SideMenu",
-    components: {
-      SideMenuItem,
-      CollapsedMenu
-    },
-    data () {
-      return {
+export default {
+  name: 'SideMenu',
+  components: {
+    SideMenuItem,
+    CollapsedMenu
+  },
+  data () {
+    return {
 
-      }
-    },
-    props: {
-      isCollapsed: Boolean,
-      navList: {
-        type: Array,
-        default () {
-          return []
-        }
-      }
-    },
-    computed: {
-      menuitemClasses () {
-        return [
-          'menu-item',
-          this.isCollapsed ? 'collapsed-menu' : ''
-        ]
-      }
-    },
-    methods: {
-      showChildren(item){
-        return item.children && (item.children.length > 1 || (item.meta && item.meta.showAlways))
-      },
-      handleSelect(name){
-        return this.$emit('on-select', name)
+    }
+  },
+  props: {
+    isCollapsed: Boolean,
+    navList: {
+      type: Array,
+      default () {
+        return []
       }
     }
+  },
+  computed: {
+    menuitemClasses () {
+      return [
+        'menu-item',
+        this.isCollapsed ? 'collapsed-menu' : ''
+      ]
+    }
+  },
+  methods: {
+    showChildren (item) {
+      return item.children && (item.children.length > 1 || (item.meta && item.meta.showAlways))
+    },
+    handleSelect (name) {
+      return this.$emit('on-select', name)
+    }
   }
+}
 </script>
 
 <style scoped>

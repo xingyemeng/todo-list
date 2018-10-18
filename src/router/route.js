@@ -27,7 +27,7 @@ export default [
     path: '/',
     component: Main,
     meta: {
-      hideInMenu: true,
+      hideInMenu: true
     },
     children: [
       {
@@ -37,7 +37,7 @@ export default [
         meta: {
           hideInMenu: true,
           title: '首页'
-        },
+        }
       }
     ]
   },
@@ -50,6 +50,7 @@ export default [
         path: 'work-page',
         name: 'work-page',
         meta: {
+          access: ['sem'],
           title: '工单提交',
           icon: 'ios-document'
         },
@@ -61,6 +62,7 @@ export default [
     path: '/work',
     name: 'work',
     meta: {
+      access: ['sem'],
       icon: 'md-menu',
       title: '竞价'
     },
@@ -83,12 +85,13 @@ export default [
           title: '不合格工单',
           showAlways: true
         },
-        component: undoneThings
+        component: deleteThingsList
       },
       {
         path: 'workverify',
         name: 'workverify',
         meta: {
+          access: ['semadmin'],
           icon: 'md-menu',
           title: '工单审核'
         },
@@ -98,10 +101,11 @@ export default [
         path: 'groupwork',
         name: 'groupwork',
         meta: {
+          access: ['semadmin'],
           icon: 'md-menu',
           title: '部门统计'
         },
-        component: doneThings
+        component: undoneThings
       }
     ]
   },
@@ -109,6 +113,7 @@ export default [
     path: '/tec',
     name: 'tec',
     meta: {
+      access: ['tec'],
       icon: 'md-menu',
       title: '技术',
       showAlways: true
@@ -128,6 +133,7 @@ export default [
         path: 'groupwork',
         name: 'grouptecwork',
         meta: {
+          access: ['tecadmin'],
           icon: 'md-menu',
           title: '部门统计'
         },
@@ -136,5 +142,3 @@ export default [
     ]
   }
 ]
-
-

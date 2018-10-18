@@ -1,4 +1,5 @@
 <template>
+  <!--eslint-disable-->
   <Submenu :name="parentItem.name">
     <template slot="title">
       <Icon :type="parentItem.icon"></Icon>
@@ -24,15 +25,15 @@
 </template>
 
 <script>
-  export default {
-    name: "side-menu-item",
-    props: ['parentItem'],
-    methods: {
-      showChildren(item){
-        return item.children && (item.children.length > 1 || (item.meta && item.meta.showAlways))
-      }
+export default {
+  name: 'side-menu-item',
+  props: ['parentItem'],
+  methods: {
+    showChildren (item) {
+      return item.children && (item.children.length > 1 || (item.meta && item.meta.showAlways))
     }
   }
+}
 </script>
 
 <style scoped>
