@@ -1,4 +1,5 @@
 import Cookies from 'js-cookie'
+import { forEach } from './tools'
 /**
  * @param list 根据路由列表获取的数据
  * @param access 从服务器端获取的当前用户的权限 未添加
@@ -20,20 +21,19 @@ export const hasChild = (item) => {
   return item.children && item.children.length !== 0
 }
 
+export const hasAcess = (item, access) => {
+  if (item.meta && item.meta.access && item.meta.access.length) {
+    if (hasOneOf(item.meta.access, access)) return true
+    else return false
+  } else return true
+}
+export const hasOneOf = (targetarr,arr) => {
+  return targetarr.some(_ => arr.indexOf(_) > -1)
+}
 export const getNavListByRoutes = (list,access) => {
-/*  var arr = list.filter( item => {
-    if(!item.children) {
-      return false
-    }else if (item.children[0].meta) {
-      if(item.children[0].meta.hideNav) return false
-    }
-    return true
-  })
-  return arr  */
-  console.log(list)
-  console.log(access)
+console.log(access)
   let arr = []
-  list.forEach(item => {
+  forEach(list, item => {
     if (!item.meta || (item.meta && !item.meta.hideInMenu)) {
       let obj = {
         icon: (item.meta && item.meta.icon) || '',

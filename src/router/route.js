@@ -50,7 +50,7 @@ export default [
         path: 'work-page',
         name: 'work-page',
         meta: {
-          access: ['sem'],
+          access: ['semuser'],
           title: '工单提交',
           icon: 'ios-document'
         },
@@ -62,7 +62,7 @@ export default [
     path: '/work',
     name: 'work',
     meta: {
-      access: ['sem'],
+      access: ['semuser'],
       icon: 'md-menu',
       title: '竞价'
     },
@@ -113,7 +113,7 @@ export default [
     path: '/tec',
     name: 'tec',
     meta: {
-      access: ['tec'],
+      access: ['tecuser', 'tecadmin'],
       icon: 'md-menu',
       title: '技术',
       showAlways: true

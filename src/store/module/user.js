@@ -9,6 +9,9 @@ export default {
   mutations: {
     setToken (token) {
       setToken(token)
+    },
+    setAccess (state, access) {
+      state.access = access
     }
   },
   actions: {
@@ -16,11 +19,10 @@ export default {
       userName = userName.trim()
       return new Promise((resolve, reject) => {
         login(userName, password).then(result => {
-          console.log(result)
           if (result.data.code === 200) {
             const data = result.data
-            console.log(data)
             commit('setToken', data.token)
+            commit('setAccess', data.access)
             resolve()
           } else {
             reject(result.data)
