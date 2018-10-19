@@ -45,13 +45,15 @@ export default {
     }
   },
   methods: {
-    ...mapActions([ 'handleLogin' ]),
+    ...mapActions([ 'handleLogin', 'getUserInfo' ]),
     handleSubmit () {
       this.$refs['formInline'].validate((valid) => {
         if (valid) {
           this.handleLogin(this.formInline)
             .then((res) => {
-              this.$router.push({name: 'home'})
+              this.getUserInfo(this.$store.state.token).then(res => {
+                this.$router.push({name: 'home'})
+              })
             })
             .catch((error) => {
               this.$Message.error(error.data)

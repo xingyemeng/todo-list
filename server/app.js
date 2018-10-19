@@ -42,6 +42,15 @@ app.use(session({
 mongoose.connect('mongodb://localhost:27017/todolist',{useNewUrlParser: true},function (err) {
   global.acl = new nodeAcl(new nodeAcl.mongodbBackend(mongoose.connection.db), logger());
   global.acl.allow(acl_conf)
+  /*global.acl.addRoleParents('semadmin','semuser', function (err) {
+    if(err) console.error(err)
+  })
+  global.acl.addRoleParents('tecadmin','tecuser', function (err) {
+    if(err) console.error(err)
+  })
+  global.acl.addRoleParents('admin',['semadmin', 'tecadmin'], function (err) {
+    if(err) console.error(err)
+  })*/
 /*  Users.findOne({name: 'gust'}, function (err, user) {
     if (err) console.error(err)
     global.acl.addUserRoles(user._id.toString(),'admin', function (err) {

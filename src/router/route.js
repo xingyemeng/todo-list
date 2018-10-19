@@ -11,6 +11,8 @@ import login from '../components/login/login'
  *    hideInMenu: 是否在左侧导航栏隐藏
  *    showAlways：设为true时，子节点长度为1的栏目不会设为下拉样式
  *    icon：icon图标
+ *
+ * note: 只有一个子栏目的权限字段放在父路由的meta内
  * */
 
 export default [
@@ -42,15 +44,17 @@ export default [
     ]
   },
   {
-    path: '/work',
+    path: '/work1',
     name: 'work1',
     component: Main,
+    meta: {
+      access: ['semuser'],
+    },
     children: [
       {
         path: 'work-page',
         name: 'work-page',
         meta: {
-          access: ['semuser'],
           title: '工单提交',
           icon: 'ios-document'
         },

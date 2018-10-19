@@ -4,7 +4,7 @@ const Works = require('../models/works')
 let router = express.Router();
 
 function getUserId(req, res){
-  return req.session.role
+  return req.session.userid
 }
 router.all('*', global.acl.middleware( 1, getUserId ),function (req,res,next) {
   next()

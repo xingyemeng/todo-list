@@ -1,17 +1,22 @@
-import { login } from '@/api/user'
+import { login, getUserInfo } from '@/api/user'
 import { setToken, getToken } from '@/libs/util'
 
 export default {
   state: {
     access: '',
-    token: getToken()
+    token: getToken(),
+    userName: ''
   },
   mutations: {
-    setToken (token) {
+    setToken (state,token) {
+      state.token = token
       setToken(token)
     },
     setAccess (state, access) {
       state.access = access
+    },
+    setUserName (state,name) {
+      state.userName = name
     }
   },
   actions: {
@@ -21,14 +26,35 @@ export default {
         login(userName, password).then(result => {
           if (result.data.code === 200) {
             const data = result.data
+            console.log(data.token)
             commit('setToken', data.token)
-            commit('setAccess', data.access)
             resolve()
           } else {
             reject(result.data)
           }
         })
       })
+    },
+    getUserInfo ({state, commit}) {
+      return new Promise((resolve, reject) => {
+        getUserInfo(state.token).then(res => {
+          let data = res.data
+          commit('setAccess', data.access)
+          commit('setUserName', data.userName)
+          resolve(data)
+        }).catch(err => {
+          console.error(err)
+        })
+      })
+    },
+    userLogout ({commit}) {
+      return new Promise((resolve, reject) => {
+        commit('setToken', '')
+        commit('setAccess', [])
+        resolve()
+      })
+
+
     }
   }
 }

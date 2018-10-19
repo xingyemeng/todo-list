@@ -4,7 +4,7 @@ import { forEach } from './tools'
  * @param list 根据路由列表获取的数据
  * @param access 从服务器端获取的当前用户的权限 未添加
  * @returns [{}] 返回一个侧边导航栏列表
- * @author 杨少鑫
+ * @author xingyemeng
  * */
 export const TOKEN_KEY = 'token'
 
@@ -22,6 +22,7 @@ export const hasChild = (item) => {
 }
 
 export const hasAcess = (item, access) => {
+  if(access[0] === 'admin') return true
   if (item.meta && item.meta.access && item.meta.access.length) {
     if (hasOneOf(item.meta.access, access)) return true
     else return false
@@ -31,7 +32,7 @@ export const hasOneOf = (targetarr,arr) => {
   return targetarr.some(_ => arr.indexOf(_) > -1)
 }
 export const getNavListByRoutes = (list,access) => {
-console.log(access)
+  console.log(access)
   let arr = []
   forEach(list, item => {
     if (!item.meta || (item.meta && !item.meta.hideInMenu)) {
@@ -40,10 +41,10 @@ console.log(access)
         name: item.name,
         meta: item.meta
       }
-      if (hasChild(item)) {
-        obj.children = getNavListByRoutes(item.children)
+      if (hasChild(item) && hasAcess(item, access)) {
+        obj.children = getNavListByRoutes(item.children, access)
       }
-      arr.push(obj)
+      if (hasAcess(item, access)) arr.push(obj)
     }
   })
   return arr

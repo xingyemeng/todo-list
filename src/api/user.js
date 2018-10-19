@@ -10,3 +10,13 @@ export const login = function (userName, password) {
     method: 'post'
   })
 }
+export const getUserInfo = function (userId) {
+  const data ={
+    userId
+  }
+  return axios({
+    url: '/api/admin/getUserInfo',
+    data,
+    method: 'post'
+  })
+}
