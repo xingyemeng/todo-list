@@ -14,9 +14,8 @@
           <Icon @click.native="collapsedSider" :class="rotateIcon" :style="{margin: '0 20px'}" type="md-menu" size="24"></Icon>
           <div class="bread">
             <Breadcrumb>
-              <BreadcrumbItem to="/">首页</BreadcrumbItem>
-              <BreadcrumbItem to="/components/breadcrumb">Components</BreadcrumbItem>
-              <BreadcrumbItem>Breadcrumb</BreadcrumbItem>
+              <BreadcrumbItem :to="'/' + conf.HomePage">首页</BreadcrumbItem>
+              <BreadcrumbItem v-for="breadItem in breadList" :key="breadItem.name">{{breadItem.meta.title || breadItem.name}}</BreadcrumbItem>
             </Breadcrumb>
           </div>
           <div class="logout" style="float: right;margin-right: 30px">
@@ -31,8 +30,10 @@
             </Dropdown>
           </div>
         </Header>
+        <div class="tags-wrapper">
+          <tag-nav></tag-nav>
+        </div>
         <Content :style="{margin: '20px', background: '#fff', minHeight: '260px'}">
-
           <router-view></router-view>
         </Content>
       </Layout>
@@ -43,6 +44,7 @@
 <script>
 import { mapGetters, mapActions } from 'vuex'
 import SideMenu from './side-menu/side-menu'
+import tagNav from './tagNav/tagNav'
 import minLogo from '../assets/images/logo-min.jpg'
 import maxLogo from '../assets/images/logo.jpg'
 import conf from '@/config/conf'
@@ -59,7 +61,8 @@ export default {
     }
   },
   components: {
-    SideMenu
+    SideMenu,
+    tagNav
   },
   computed: {
     ...mapGetters(['undoneThings']),
@@ -71,6 +74,9 @@ export default {
     },
     navList () {
       return this.$store.getters.navList
+    },
+    breadList () {
+      return this.$route.matched
     }
   },
   methods: {
@@ -91,6 +97,8 @@ export default {
   mounted () {
     this.$store.dispatch('getTodayList')
     this.$store.dispatch('getDeleteThings')
+    console.log(this.$route)
+    console.log(this.$route.matched)
   }
 }
 </script>

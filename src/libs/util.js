@@ -1,12 +1,7 @@
 import Cookies from 'js-cookie'
 import { forEach } from './tools'
-/**
- * @param list 根据路由列表获取的数据
- * @param access 从服务器端获取的当前用户的权限 未添加
- * @returns [{}] 返回一个侧边导航栏列表
- * @author xingyemeng
- * */
-export const TOKEN_KEY = 'token'
+
+export const TOKEN_KEY = 'mytoken'
 
 export const setToken = (token) => {
   Cookies.set(TOKEN_KEY, token, {expires: 1})
@@ -31,6 +26,12 @@ export const hasAcess = (item, access) => {
 export const hasOneOf = (targetarr,arr) => {
   return targetarr.some(_ => arr.indexOf(_) > -1)
 }
+/**
+ * @param list 根据路由列表获取的数据
+ * @param access 从服务器端获取的当前用户的权限
+ * @returns [{}] 返回一个侧边导航栏列表
+ * @author xingyemeng
+ * */
 export const getNavListByRoutes = (list,access) => {
   console.log(access)
   let arr = []

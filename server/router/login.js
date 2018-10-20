@@ -32,9 +32,7 @@ router.post('/login', function (req, res) {
 });
 router.post('/getUserInfo', function (req, res) {
   let data = req.body;
-  console.log(data)
   Users.findById({_id: data.userId}, function (err, user) {
-    console.log(user)
     if(err) console.error(err)
     global.acl.userRoles(user._id.toString(), function (err, roles) {
       if(err) console.error(err)
