@@ -63,7 +63,6 @@ mongoose.connect('mongodb://localhost:27017/todolist',{useNewUrlParser: true},fu
       acl.addUserRoles( user._id.toString(), request.params.role );
       response.send( request.params.user + ' is a ' + request.params.role );
     })
-
   });
   app.get( '/disallow/:user/:role', function( request, response, next ) {
     Users.findOne({name: request.params.user}, function (err ,user) {
@@ -74,6 +73,7 @@ mongoose.connect('mongodb://localhost:27017/todolist',{useNewUrlParser: true},fu
   });
   app.use('/admin', require('./router/login'));
   app.use('/things', require('./router/things'));
+  app.use('/waitui', require('./router/spbaidu/spbaidu'));
   app.listen(8081);
 });
 

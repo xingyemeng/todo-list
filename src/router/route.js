@@ -144,5 +144,27 @@ export default [
         component: doneThings
       }
     ]
+  },
+  {
+    path: '/waitui',
+    name: 'waitui',
+    meta: {
+      access: ['wtuser'],
+      icon: 'md-menu',
+      title: '外推',
+      showAlways: true
+    },
+    component: Main,
+    children: [
+      {
+        path: 'wtlist',
+        name: 'wtlist',
+        meta: {
+          icon: 'md-menu',
+          title: '外链统计'
+        },
+        component: () => import('@/components/waitui/waitui'),
+      }
+    ]
   }
 ]

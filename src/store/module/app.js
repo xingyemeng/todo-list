@@ -104,7 +104,7 @@ export default {
         context.dispatch('getTodayList')
         context.dispatch('getDeleteThings')
       })
-    }
+    },
     /* 首页导航栏高亮事件
     *
     * @name on-select事件传递参数
@@ -114,5 +114,14 @@ export default {
     * }
     * 最后使用localStorage解决
     */
+    handleWtList (context, data) {
+      if(!data) data = 'axios'
+      axios({
+        method: 'get',
+        url: '/api/waitui/wtlist?wd=' + data,
+      }).then(res => {
+        console.log(res)
+      })
+    }
   }
 }

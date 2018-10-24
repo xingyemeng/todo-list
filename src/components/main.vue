@@ -30,7 +30,7 @@
             </Dropdown>
           </div>
         </Header>
-        <div class="tags-wrapper">
+        <div class="tags-nav">
           <tag-nav></tag-nav>
         </div>
         <Content :style="{margin: '20px', background: '#fff', minHeight: '260px'}">
