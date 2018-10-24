@@ -24,45 +24,49 @@ var instance = axios.create({
 });
 
 module.exports = {
-  spider (cnodeUrl) {
+  spider (wd) {
+    let cnodeUrl = encodeURI('https://www.baidu.com/s?wd=' + wd + '&pn=');
     const arr = []
+    const arrTitle = []
+    const parsedUrl = []
     let count = 1;
-    let pages = [0,10,20];
+    let pageNumbers = [0,10,20];
     const that = this
-    instance.get(cnodeUrl)
-      .then(function(res){
-        const $ = cheerio.load(res.data);
-        $('.c-container>h3>a').each(function () {
-          arr.push($(this).attr('href'))
-        })
-        console.log(arr)
-        that.parseUrl(arr)
-      }).catch(err => {
-      console.error(err)
-    })
-  },
-   async parseUrl (arr) {
-    /*const parsedUrl = []
-    arr.forEach(function (item) {
-      instance.get(item)
-        .then(res => {
-
+      instance.get(cnodeUrl)
+        .then(function(res){
+          console.log(res.data)
+          const $ = cheerio.load(res.data);
+          $('.c-container>h3>a').each(function () {
+            arr.push($(this).attr('href'))
+          })
+          $('.c-container>h3>a').each(function () {
+            arrTitle.push($(this).text())
+          })
+          console.log(arrTitle)
+          console.log(arr)
+          that.parseUrl(arr).then(res => {
+            parsedUrl.push(...res);
+            console.log(parsedUrl)
+          })
         }).catch(err => {
-        parsedUrl.push(err.response.headers.location)
+        console.error(err)
       })
-    })
-    return parsedUrl*/
-    let parsedUrl = []
-    await async.mapLimit(arr, 3, function (item, callback) {
-      instance.get(item)
-        .then(res => {
 
-        }).catch(err => {
+
+  },
+   parseUrl (arr) {
+    return new Promise((resolve, reject) => {
+      async.mapLimit(arr, 3, function (item, callback) {
+        instance.get(item)
+          .then(res => {
+
+          }).catch(err => {
           callback(null,err.response.headers.location)
         })
-    },function (err, results) {
-      parsedUrl = results
+      },function (err, results) {
+        if(err) reject(err)
+        resolve(results)
+      })
     })
-    console.log(parsedUrl)
   }
 }
