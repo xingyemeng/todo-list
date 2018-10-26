@@ -25,7 +25,8 @@
     "memorystore": "^1.6.0",
     "mongoose": "^5.2.14",
     "vue": "^2.5.2",
-    "vue-router": "^3.0.1"
+    "vue-router": "^3.0.1",
+    "xlsx": "^0.14.0"
   },
   "devDependencies": {
     "acl": "^0.4.11",

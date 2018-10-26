@@ -19,77 +19,22 @@ let concurrencyCount = 0;
 
 
 var instance = axios.create({
-  timeout: 1000,
+  timeout: 100000,
   headers: headers,
   maxRedirects: 0
 });
-
-module.exports = {
-  count: 0,
-  parsedUrl: [],
-  spider (str) {
-    const that = this
-    return new Promise((resolve, reject) => {
-      let cnodeUrl = ''
-      ++(this.count)
-      if(this.count ==1) {
-        cnodeUrl = encodeURI('https://www.baidu.com' + str);
-      }else{
-        cnodeUrl = 'https://www.baidu.com' + str;
-      }
-      const arr = []
-      const arrTitle = []
-      instance.get(cnodeUrl)
-        .then(function(res){
-          const $ = cheerio.load(res.data);
-          $('.c-container>h3>a').each(function () {
-            arr.push($(this).attr('href'))
-          })
-          $('.c-container>h3>a').each(function () {
-            arrTitle.push($(this).text())
-          })
-          that.parseUrl(arr).then(res => {
-            that.parsedUrl.push(...res);
-            if (that.count < 3) {
-              let aHref = $('#page>strong+a').attr('href')
-              that.spider(aHref).then(res=>{resolve(res)})
-            }else {
-              that.count = 0
-              resolve(that.parsedUrl)
-              that.parsedUrl = []
-            }
-          })
-        }).catch(err => {
-          reject(err)
-        })
-    })
-  },
-   parseUrl (arr) {
-    return new Promise((resolve, reject) => {
-      async.mapLimit(arr, 3, function (item, callback) {
-        instance.get(item)
-          .then(res => {
-
-          }).catch(err => {
-            if(item.indexOf('http') !== -1){
-              callback(null,err.response.headers.location)
-            }else{
-              callback(null,'http://www.baidu.com/' + item)
-            }
-
-          })
-      },function (err, results) {
-        if(err) reject(err)
-        resolve(results)
-      })
-    })
-  },
-  /**
-   * 获取前三页的搜索内容
-   *
-   * */
-  getAllData (arrTitle, parsedUrl) {
-    const that = this
+module.exports = function spider (str, count, parsedUrl) {
+  console.log(count)
+  return new Promise((resolve, reject) => {
+    let cnodeUrl = ''
+    ++count
+    if(count ==1) {
+      cnodeUrl = encodeURI('https://www.baidu.com' + str);
+    }else{
+      cnodeUrl = 'https://www.baidu.com' + str;
+    }
+    const arr = []
+    const arrTitle = []
     instance.get(cnodeUrl)
       .then(function(res){
         const $ = cheerio.load(res.data);
@@ -99,19 +44,68 @@ module.exports = {
         $('.c-container>h3>a').each(function () {
           arrTitle.push($(this).text())
         })
-        console.log(arrTitle)
-        console.log(arr)
-        that.parseUrl(arr).then(res => {
+        parseUrl(arr).then(res => {
           parsedUrl.push(...res);
-          console.log(parsedUrl)
-          if (that.count < 3) {
-            console.log($('#page>strong+a').attr('href'))
+          if (count < 3) {
             let aHref = $('#page>strong+a').attr('href')
-            that.spider(aHref)
+            spider(aHref, count, parsedUrl).then(res=>{resolve(res)})
+          }else {
+            count = 0
+            resolve(parsedUrl)
+            parsedUrl = []
           }
         })
       }).catch(err => {
-      console.error(err)
+      reject(err)
     })
-  }
+  })
+}
+
+
+function parseUrl (arr) {
+  return new Promise((resolve, reject) => {
+    async.mapLimit(arr, 3, function (item, callback) {
+      instance.get(item)
+        .then(res => {
+
+        }).catch(err => {
+          if(item.indexOf('http') !== -1){
+            if(!err.response) callback(null,item)
+            callback(null,err.response.headers.location)
+          }else{
+            callback(null,'http://www.baidu.com/' + item)
+          }
+        })
+    },function (err, results) {
+      if(err) reject(err)
+      resolve(results)
+    })
+  })
+}
+
+function getAllDate() {
+
+  instance.get(cnodeUrl)
+    .then(function(res){
+      const $ = cheerio.load(res.data);
+      $('.c-container>h3>a').each(function () {
+        arr.push($(this).attr('href'))
+      })
+      $('.c-container>h3>a').each(function () {
+        arrTitle.push($(this).text())
+      })
+      parseUrl(arr).then(res => {
+        parsedUrl.push(...res);
+        if (count < 3) {
+          let aHref = $('#page>strong+a').attr('href')
+          spider(aHref).then(res=>{resolve(res)})
+        }else {
+          count = 0
+          resolve(parsedUrl)
+          parsedUrl = []
+        }
+      })
+    }).catch(err => {
+    reject(err)
+  })
 }

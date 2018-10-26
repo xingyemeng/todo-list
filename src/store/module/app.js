@@ -115,12 +115,17 @@ export default {
     * 最后使用localStorage解决
     */
     handleWtList (context, data) {
-      if(!data) data = 'axios'
-      axios({
-        method: 'get',
-        url: '/api/waitui/wtlist?wd=' + data,
-      }).then(res => {
-        console.log(res)
+      return new Promise((resolve, reject) => {
+        if(!data) data = ['axios']
+        axios({
+          method: 'post',
+          url: '/api/waitui/wtlist',
+          data: data
+        }).then(res => {
+          resolve(res.data)
+        }).catch(err => {
+          reject(err)
+        })
       })
     }
   }
