@@ -5,7 +5,7 @@ const async = require('async');
 const router = express.Router();
 router.post('/wtlist', function (req,res,next) {
   const originArr = req.body
-  async.map(originArr, function (item, callback) {
+  async.mapLimit(originArr, 3, function (item, callback) {
     const str = '/s?wd=' + item.title + '&pn=0&usm=1'
     const parsedUrl = []
     spider(str, 0, parsedUrl).then(resolve => {
