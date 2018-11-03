@@ -15,17 +15,17 @@ router.beforeEach((to, from, next) => {
   const Token = getToken('token')
   const LoginPage = 'login'
   const HomePage = 'home'
-  //未登录要进去登录界面
-  if(!Token && to.name === LoginPage) {
+  // 未登录要进去登录界面
+  if (!Token && to.name === LoginPage) {
     next()
   } else if (!Token && to.name !== LoginPage) {
-    //未登录进入非登录界面
+    // 未登录进入非登录界面
     next({name: LoginPage})
   } else if (Token && to.name === LoginPage) {
-    //已登录进入非登录界面
+    // 已登录进入非登录界面
     next(HomePage)
-  }else {
-    //已登录进入首页，此时调用getUserInfo
+  } else {
+    // 已登录进入首页，此时调用getUserInfo
     store.dispatch('getUserInfo').then(res => {
       next()
     })

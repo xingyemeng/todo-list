@@ -9,7 +9,7 @@
 import { mapActions } from 'vuex'
 import XLSX from 'xlsx'
 export default {
-  name: "waitui",
+  name: 'waitui',
   data () {
     return {
       json: [],
@@ -25,7 +25,7 @@ export default {
                 }
               }),
               h('strong', params.row.title)
-            ]);
+            ])
           }
         },
         {
@@ -77,7 +77,7 @@ export default {
                   }
                 }
               }, 'Delete')
-            ]);
+            ])
           }
         }
       ]
@@ -96,24 +96,25 @@ export default {
       })
     },
     remove (index) {
-      this.data8.splice(index, 1);
+      this.data8.splice(index, 1)
     },
     ...mapActions(['handleWtList']),
     handleFile () {
-      var rABS = true;
-      var files = this.$refs.originFile.files, f = files[0];
-      var reader = new FileReader();
+      var rABS = true
+      var files = this.$refs.originFile.files
+      var f = files[0]
+      var reader = new FileReader()
       reader.onload = (e) => {
-        var data = e.target.result;
-        if(!rABS) data = new Uint8Array(data);
-        var workbook = XLSX.read(data, {type: rABS ? 'binary' : 'array'});
+        var data = e.target.result
+        if (!rABS) data = new Uint8Array(data)
+        var workbook = XLSX.read(data, {type: rABS ? 'binary' : 'array'})
         console.log(workbook)
         /* DO SOMETHING WITH workbook HERE */
         this.json = XLSX.utils.sheet_to_json(workbook.Sheets[workbook.SheetNames[0]])
         console.log(this.json)
         console.log(this.data8)
-      };
-      if(rABS) reader.readAsBinaryString(f); else reader.readAsArrayBuffer(f);
+      }
+      if (rABS) reader.readAsBinaryString(f); else reader.readAsArrayBuffer(f)
     }
   }
 }

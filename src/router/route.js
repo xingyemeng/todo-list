@@ -48,7 +48,7 @@ export default [
     name: 'work1',
     component: Main,
     meta: {
-      access: ['semuser'],
+      access: ['semuser']
     },
     children: [
       {
@@ -163,7 +163,7 @@ export default [
           icon: 'md-menu',
           title: '外链统计'
         },
-        component: () => import('@/components/waitui/waitui'),
+        component: () => import('@/components/waitui/waitui')
       }
     ]
   }

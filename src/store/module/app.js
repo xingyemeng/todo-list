@@ -11,7 +11,8 @@ export default {
       {id: 2, title: '劳力士手表', text: '劳力士手表维修流程'},
       {id: 3, title: '浪琴手表', text: '浪琴手表维修流程'}
     ],
-    deleteThingsList: []
+    deleteThingsList: [],
+    tagsList: []
   },
   getters: {
     undoneThings: state => {
@@ -116,7 +117,7 @@ export default {
     */
     handleWtList (context, data) {
       return new Promise((resolve, reject) => {
-        if(!data) data = ['axios']
+        if (!data) data = ['axios']
         axios({
           method: 'post',
           url: '/api/waitui/wtlist',

@@ -33,7 +33,7 @@
         <div class="tags-nav">
           <tag-nav></tag-nav>
         </div>
-        <Content :style="{margin: '20px', background: '#fff', minHeight: '260px'}">
+        <Content :style="{background: '#fff', minHeight: '260px'}">
           <router-view></router-view>
         </Content>
       </Layout>
@@ -42,7 +42,7 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex'
+import { mapActions } from 'vuex'
 import SideMenu from './side-menu/side-menu'
 import tagNav from './tagNav/tagNav'
 import minLogo from '../assets/images/logo-min.jpg'
@@ -65,7 +65,6 @@ export default {
     tagNav
   },
   computed: {
-    ...mapGetters(['undoneThings']),
     rotateIcon () {
       return [
         'menu-icon',
@@ -86,19 +85,16 @@ export default {
     },
     turnToName (name) {
       this.$router.push({name: name})
+      this.$nextTick(function () {
+        console.log(this.$route)
+      })
     },
     handleUserLogout () {
-      this.userLogout().then( res => {
+      this.userLogout().then(res => {
         console.log(this.conf.LoginPage)
         this.$router.push({name: this.conf.LoginPage})
       })
     }
-  },
-  mounted () {
-    this.$store.dispatch('getTodayList')
-    this.$store.dispatch('getDeleteThings')
-    console.log(this.$route)
-    console.log(this.$route.matched)
   }
 }
 </script>
@@ -187,5 +183,10 @@ export default {
 }
 .bread{
   float: left;
+}
+.tags-nav{
+  position: relative;
+  width: 100%;
+  height: 40px;
 }
 </style>

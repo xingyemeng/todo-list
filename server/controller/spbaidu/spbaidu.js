@@ -44,10 +44,12 @@ module.exports = function spider (str, count, parsedUrl) {
         $('.c-container>h3>a').each(function () {
           arrTitle.push($(this).text())
         })
+        console.log(arrTitle)
         parseUrl(arr).then(res => {
           parsedUrl.push(...res);
           if (count < 3) {
             let aHref = $('#page>strong+a').attr('href')
+            console.log(aHref)
             spider(aHref, count, parsedUrl).then(res=>{resolve(res)})
           }else {
             count = 0

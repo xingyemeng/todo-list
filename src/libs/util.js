@@ -17,13 +17,13 @@ export const hasChild = (item) => {
 }
 
 export const hasAcess = (item, access) => {
-  if(access[0] === 'admin') return true
+  if (access[0] === 'admin') return true
   if (item.meta && item.meta.access && item.meta.access.length) {
     if (hasOneOf(item.meta.access, access)) return true
     else return false
   } else return true
 }
-export const hasOneOf = (targetarr,arr) => {
+export const hasOneOf = (targetarr, arr) => {
   return targetarr.some(_ => arr.indexOf(_) > -1)
 }
 /**
@@ -32,8 +32,7 @@ export const hasOneOf = (targetarr,arr) => {
  * @returns [{}] 返回一个侧边导航栏列表
  * @author xingyemeng
  * */
-export const getNavListByRoutes = (list,access) => {
-  console.log(access)
+export const getNavListByRoutes = (list, access) => {
   let arr = []
   forEach(list, item => {
     if (!item.meta || (item.meta && !item.meta.hideInMenu)) {

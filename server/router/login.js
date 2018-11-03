@@ -41,7 +41,6 @@ router.post('/getUserInfo', function (req, res) {
         access: roles
       })
     })
-
   })
 })
 

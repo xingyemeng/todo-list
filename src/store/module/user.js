@@ -8,14 +8,14 @@ export default {
     userName: ''
   },
   mutations: {
-    setToken (state,token) {
+    setToken (state, token) {
       state.token = token
       setToken(token)
     },
     setAccess (state, access) {
       state.access = access
     },
-    setUserName (state,name) {
+    setUserName (state, name) {
       state.userName = name
     }
   },
@@ -53,8 +53,6 @@ export default {
         commit('setAccess', [])
         resolve()
       })
-
-
     }
   }
 }

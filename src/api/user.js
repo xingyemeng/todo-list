@@ -11,7 +11,7 @@ export const login = function (userName, password) {
   })
 }
 export const getUserInfo = function (userId) {
-  const data ={
+  const data = {
     userId
   }
   return axios({
