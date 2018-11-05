@@ -11,24 +11,7 @@
     </div>
     <div class="tags-group" ref="scrollGroup">
       <div class="scroll-wrap" ref="scrollWrap" :style="{left: left+'px'}">
-        <Tag type="dot" closable color="primary">首页</Tag>
-        <Tag type="dot" closable @on-close="handleCloseTag()">标签二</Tag>
-        <Tag type="dot" closable color="primary">首页</Tag>
-        <Tag type="dot" closable>标签二</Tag>
-        <Tag type="dot" closable color="primary">首页</Tag>
-        <Tag type="dot" closable>标签二</Tag>
-        <Tag type="dot" closable color="primary">首页</Tag>
-        <Tag type="dot" closable>标签二</Tag>
-        <Tag type="dot" closable color="primary">首页</Tag>
-        <Tag type="dot" closable>标签二</Tag>
-        <Tag type="dot" closable color="primary">首页</Tag>
-        <Tag type="dot" closable>标签二</Tag>
-        <Tag type="dot" closable color="primary">首页</Tag>
-        <Tag type="dot" closable>标签二</Tag>
-        <Tag type="dot" closable color="primary">首页</Tag>
-        <Tag type="dot" closable>标签二</Tag>
-        <Tag type="dot" closable color="primary">首页</Tag>
-        <Tag type="dot" closable>标签二</Tag>
+        <Tag v-for="item in list" :key="item.link" :color="$route.fullPath === item.link ? 'primary' : ''" type="dot" closable @on-close="handleCloseTag(item.link)">{{item.name}}</Tag>
       </div>
     </div>
   </div>
@@ -41,6 +24,14 @@ export default {
     return {
       left: 0,
       speed: 300
+    }
+  },
+  props: {
+    list: {
+      type: Array,
+      default: function () {
+        return []
+      }
     }
   },
   methods: {
@@ -66,6 +57,9 @@ export default {
           this.left = 0
         }
       }
+    },
+    handleCloseTag (closeTag) {
+      return this.$emit('on-close', closeTag)
     }
   }
 }

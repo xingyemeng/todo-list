@@ -31,7 +31,7 @@
           </div>
         </Header>
         <div class="tags-nav">
-          <tag-nav></tag-nav>
+          <tag-nav :list="tagsList" :on-close="closeTag()"></tag-nav>
         </div>
         <Content :style="{background: '#fff', minHeight: '260px'}">
           <router-view></router-view>
@@ -42,7 +42,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapMutations } from 'vuex'
 import SideMenu from './side-menu/side-menu'
 import tagNav from './tagNav/tagNav'
 import minLogo from '../assets/images/logo-min.jpg'
@@ -55,6 +55,7 @@ export default {
     return {
       activemenu: '',
       isCollapsed: false,
+      tagsList: this.$store.state.app.tagsList,
       maxLogo,
       minLogo,
       conf
@@ -80,20 +81,41 @@ export default {
   },
   methods: {
     ...mapActions(['userLogout']),
+    ...mapMutations(['addTagsList']),
     collapsedSider () {
       this.$refs.side1.toggleCollapse()
     },
     turnToName (name) {
       this.$router.push({name: name})
-      this.$nextTick(function () {
-        console.log(this.$route)
-      })
     },
     handleUserLogout () {
       this.userLogout().then(res => {
-        console.log(this.conf.LoginPage)
         this.$router.push({name: this.conf.LoginPage})
       })
+    },
+    closeTag (tagLink) {
+      /**
+       * 根据子组件传递过来的标签的连接（因为连接是唯一的，名字可能会重复）
+       * 匹配tagsLink数组中的包含改link的元素，然后删除
+       *
+       * */
+    }
+  },
+  beforeRouteUpdate (to, from, next) {
+    const item = {
+      name: '',
+      link: ''
+    }
+    item.name = to.meta.title
+    item.link = to.fullPath
+    let arr = this.tagsList.filter(function (item) {
+      return item.link === to.fullPath
+    })
+    if (arr.length !== 0) {
+      next()
+    } else {
+      this.addTagsList(item)
+      next()
     }
   }
 }

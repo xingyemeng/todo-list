@@ -12,7 +12,10 @@ export default {
       {id: 3, title: '浪琴手表', text: '浪琴手表维修流程'}
     ],
     deleteThingsList: [],
-    tagsList: []
+    tagsList: [{
+      name: '首页',
+      link: '/home'
+    }]
   },
   getters: {
     undoneThings: state => {
@@ -39,6 +42,9 @@ export default {
     },
     getTodayList (state, data) {
       state.todayList = data
+    },
+    addTagsList (state, item) {
+      state.tagsList.push(item)
     }
   },
   actions: {
