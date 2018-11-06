@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import iView from 'iview'
 import VueRouter from 'vue-router'
 import routes from './route'
 import { getToken } from '@/libs/util'
@@ -12,6 +13,7 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to, from, next) => {
+  iView.LoadingBar.start()
   const Token = getToken('token')
   const LoginPage = 'login'
   const HomePage = 'home'
@@ -22,7 +24,7 @@ router.beforeEach((to, from, next) => {
     // 未登录进入非登录界面
     next({name: LoginPage})
   } else if (Token && to.name === LoginPage) {
-    // 已登录进入非登录界面
+    // 已登录进入登录界面
     next(HomePage)
   } else {
     // 已登录进入首页，此时调用getUserInfo
@@ -30,6 +32,10 @@ router.beforeEach((to, from, next) => {
       next()
     })
   }
+})
+router.afterEach(to => {
+  iView.LoadingBar.finish()
+  window.scrollTo(0, 0)
 })
 
 export default router

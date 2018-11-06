@@ -7,11 +7,19 @@
       <Button icon="ios-arrow-forward" long></Button>
     </div>
     <div class="btn-close">
-      <Button icon="ios-close-circle-outline" long></Button>
+      <Dropdown transfer placement="bottom-end">
+        <a href="javascript:void(0)">
+          <Button icon="ios-close-circle-outline" long></Button>
+        </a>
+        <DropdownMenu slot="list">
+          <DropdownItem><span @click="handleCloseMoreTag">关闭全部</span></DropdownItem>
+          <DropdownItem><span @click="handleCloseMoreTag($route.fullPath)">关闭其他</span></DropdownItem>
+        </DropdownMenu>
+      </Dropdown>
     </div>
     <div class="tags-group" ref="scrollGroup">
       <div class="scroll-wrap" ref="scrollWrap" :style="{left: left+'px'}">
-        <Tag v-for="item in list" :key="item.link" :color="$route.fullPath === item.link ? 'primary' : ''" type="dot" closable @on-close="handleCloseTag(item.link)">{{item.name}}</Tag>
+        <Tag v-for="item in list" :key="item.link" :color="$route.fullPath === item.link ? 'primary' : ''" type="dot" :closable="item.link != '/home'" @click.native="handleClickTag(item.link)" @on-close="handleCloseTag(item.link)">{{item.name}}</Tag>
       </div>
     </div>
   </div>
@@ -60,6 +68,12 @@ export default {
     },
     handleCloseTag (closeTag) {
       return this.$emit('on-close', closeTag)
+    },
+    handleClickTag (link) {
+      this.$router.push(link)
+    },
+    handleCloseMoreTag (item) {
+      return this.$emit('close-tag', item)
     }
   }
 }
@@ -126,8 +140,8 @@ export default {
   border-radius: 0;
   height: 100%;
   font-size: 20px;
-  padding: 0;
   border-left: 0;
+  padding: 3px 6px
 }
 .scroll-wrap{
   position: absolute;

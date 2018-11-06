@@ -31,7 +31,7 @@
           </div>
         </Header>
         <div class="tags-nav">
-          <tag-nav :list="tagsList" :on-close="closeTag()"></tag-nav>
+          <tag-nav :list="tagsList" @on-close="closeTag" @close-tag="closeMoreTag"></tag-nav>
         </div>
         <Content :style="{background: '#fff', minHeight: '260px'}">
           <router-view></router-view>
@@ -95,27 +95,58 @@ export default {
     },
     closeTag (tagLink) {
       /**
-       * 根据子组件传递过来的标签的连接（因为连接是唯一的，名字可能会重复）
+       * 根据子组件传递过来的标签的连接（因为链接是唯一的，名字可能会重复）
        * 匹配tagsLink数组中的包含改link的元素，然后删除
        *
        * */
+      let index = this.tagsList.findIndex(function (item, index) {
+        return item.link === tagLink
+      })
+      // 检测改标签是否是打开状态
+      if (this.tagsList[index].link === this.$route.fullPath) {
+        this.tagsList.splice(index, 1)
+        if (index > 1) {
+          this.$router.push(this.tagsList[index - 1].link)
+        } else {
+          if (this.tagsList.length > 1) {
+            this.$router.push(this.tagsList[index].link)
+          } else {
+            this.$router.push('/home')
+          }
+        }
+      } else {
+        // 标签是未打开状态，所以直接关闭，路由不跳转
+        this.tagsList.splice(index, 1)
+      }
+    },
+    closeMoreTag (link) {
+      if (typeof (link) === 'string') {
+        let index = this.tagsList.findIndex(function (item, index) {
+          return item.link === link
+        })
+        const arr = this.tagsList.splice(index, 1)
+        this.tagsList.splice(1, this.tagsList.length - 1, arr[0])
+      } else {
+        this.tagsList.splice(1, this.tagsList.length - 1)
+        this.$router.push('/home')
+      }
     }
   },
-  beforeRouteUpdate (to, from, next) {
-    const item = {
-      name: '',
-      link: ''
-    }
-    item.name = to.meta.title
-    item.link = to.fullPath
-    let arr = this.tagsList.filter(function (item) {
-      return item.link === to.fullPath
-    })
-    if (arr.length !== 0) {
-      next()
-    } else {
-      this.addTagsList(item)
-      next()
+  watch: {
+    '$route' (newRoute) {
+      const item = {
+        name: '',
+        link: ''
+      }
+      item.name = newRoute.meta.title
+      item.link = newRoute.fullPath
+      item.rName = newRoute.name
+      let arr = this.tagsList.filter(function (item) {
+        return item.link === newRoute.fullPath
+      })
+      if (arr.length === 0) {
+        this.addTagsList(item)
+      }
     }
   }
 }
