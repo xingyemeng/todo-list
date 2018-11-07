@@ -17,7 +17,7 @@ export const hasChild = (item) => {
 }
 
 export const hasAcess = (item, access) => {
-  if (access[0] === 'admin') return true
+  if (access[0] && access[0] === 'admin') return true
   if (item.meta && item.meta.access && item.meta.access.length) {
     if (hasOneOf(item.meta.access, access)) return true
     else return false

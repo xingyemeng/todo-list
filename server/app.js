@@ -6,18 +6,27 @@ const session = require('express-session');
 const MemoryStore = require('memorystore')(session);
 const Roles = require('./models/roles');
 const Resources = require('./models/resources');
-const acl_conf = require('./conf/aclconf')
+const acl_conf = require('./conf/aclconf');
+const history = require('connect-history-api-fallback');
+const path = require('path')
 
 const app = express();
 const store = new MemoryStore();
-app.use(express.json());
 
+app.use(history({
+  index: '/home'
+}));
+app.use(express.json());
 app.use(session({
   secret: 'keyboard cat',
   resave: false,
   saveUninitialized: true,
   store: store
 }));
+app.use('/static', express.static(path.join(__dirname, '../dist/static')));
+app.all('*', function (req, res, next) {
+  res.sendFile(path.join(__dirname, "../dist/index.html"))
+})
 /*app.get('/',function (req,res,next) {
   store.length(function (err, len) {
     console.log(len)
