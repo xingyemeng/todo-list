@@ -27,10 +27,15 @@ router.beforeEach((to, from, next) => {
     // 已登录进入登录界面
     next(HomePage)
   } else {
+    console.log(store.state.user.access.length)
     // 已登录进入首页，此时调用getUserInfo
-    store.dispatch('getUserInfo').then(res => {
+    if (store.state.user.access.length !== 0) {
       next()
-    })
+    } else {
+      store.dispatch('getUserInfo').then(res => {
+        next()
+      })
+    }
   }
 })
 router.afterEach(to => {

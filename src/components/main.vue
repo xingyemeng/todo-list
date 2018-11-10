@@ -15,7 +15,7 @@
           <div class="bread">
             <Breadcrumb>
               <BreadcrumbItem :to="'/' + conf.HomePage">首页</BreadcrumbItem>
-              <BreadcrumbItem v-for="breadItem in breadList" :key="breadItem.name">{{breadItem.meta.title || breadItem.name}}</BreadcrumbItem>
+              <BreadcrumbItem v-for="breadItem in breadList" :key="breadItem.name" v-if="breadItem.name && breadItem.meta.title !== '首页'">{{breadItem.meta.title || breadItem.name}}</BreadcrumbItem>
             </Breadcrumb>
           </div>
           <div class="logout" style="float: right;margin-right: 30px">
@@ -147,6 +147,12 @@ export default {
       if (arr.length === 0) {
         this.addTagsList(item)
       }
+    }
+  },
+  mounted () {
+    // 如果当前打开页面不在标签栏中，跳到homeName页
+    if (!this.tagsList.find(item => item.link === this.$route.fullPath)) {
+      this.$router.push('/home')
     }
   }
 }

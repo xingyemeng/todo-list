@@ -14,7 +14,7 @@ const app = express();
 const store = new MemoryStore();
 
 app.use(history({
-  index: '/home'
+  index: '/login'
 }));
 app.use(express.json());
 app.use(session({
@@ -23,10 +23,6 @@ app.use(session({
   saveUninitialized: true,
   store: store
 }));
-app.use('/static', express.static(path.join(__dirname, '../dist/static')));
-app.all('*', function (req, res, next) {
-  res.sendFile(path.join(__dirname, "../dist/index.html"))
-})
 /*app.get('/',function (req,res,next) {
   store.length(function (err, len) {
     console.log(len)

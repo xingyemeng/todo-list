@@ -39,6 +39,7 @@ export default {
       return new Promise((resolve, reject) => {
         getUserInfo(state.token).then(res => {
           let data = res.data
+          console.log(data)
           commit('setAccess', data.access)
           commit('setUserName', data.userName)
           resolve(data)
