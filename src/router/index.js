@@ -28,10 +28,11 @@ router.beforeEach((to, from, next) => {
     next(HomePage)
   } else {
     console.log(store.state.user.access.length)
-    // 已登录进入首页，此时调用getUserInfo
+    // 判断是否已经获取用户信息
     if (store.state.user.access.length !== 0) {
       next()
     } else {
+      // 已登录进入首页，此时调用getUserInfo
       store.dispatch('getUserInfo').then(res => {
         next()
       })

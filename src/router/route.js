@@ -166,5 +166,13 @@ export default [
         component: () => import('@/components/waitui/waitui')
       }
     ]
+  },
+  {
+    path: '*',
+    name: 'err-404',
+    meta: {
+      hideInMenu: true
+    },
+    component: () => import('@/components/err/err_404/404.vue')
   }
 ]
