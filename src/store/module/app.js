@@ -1,6 +1,6 @@
 import axios from 'axios'
 import routes from '../../router/route'
-import { getNavListByRoutes } from '../../libs/util'
+import { getNavListByRoutes, setLocalStorage, getLocalStorage} from '../../libs/util'
 
 export default {
   state: {
@@ -12,10 +12,12 @@ export default {
       {id: 3, title: '浪琴手表', text: '浪琴手表维修流程'}
     ],
     deleteThingsList: [],
-    tagsList: [{
-      name: '首页',
-      link: '/home'
-    }]
+    tagsList: [
+      {
+        name: '首页',
+        link: '/home'
+      }
+    ]
   },
   getters: {
     undoneThings: state => {
@@ -45,6 +47,11 @@ export default {
     },
     addTagsList (state, item) {
       state.tagsList.push(item)
+      setLocalStorage(item)
+      console.log(JSON.parse(localStorage.getItem('tagsList')))
+    },
+    getTagsFromLocal (state, arr) {
+      state.tagsList.push(...arr)
     }
   },
   actions: {

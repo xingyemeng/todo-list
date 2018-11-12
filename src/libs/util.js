@@ -49,3 +49,30 @@ export const getNavListByRoutes = (list, access) => {
   })
   return arr
 }
+
+/**
+ * 标签栏写入localStorage
+ * */
+const arr = JSON.parse(localStorage.getItem('tagsList'))
+export const setLocalStorage = (item) => {
+  arr.push(item)
+  console.log(arr)
+  localStorage.setItem('tagsList', JSON.stringify(arr))
+}
+
+
+export const getLocalStorage = () => {
+  return JSON.parse(localStorage.getItem('tagsList'))
+}
+
+
+
+
+
+
+
+
+
+
+
+

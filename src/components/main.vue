@@ -81,7 +81,7 @@ export default {
   },
   methods: {
     ...mapActions(['userLogout']),
-    ...mapMutations(['addTagsList']),
+    ...mapMutations(['addTagsList', 'getTagsFromLocal']),
     collapsedSider () {
       this.$refs.side1.toggleCollapse()
     },
@@ -150,6 +150,11 @@ export default {
     }
   },
   mounted () {
+    // 从localStorage获取tagsList
+    // localStorage.removeItem('tagsList')
+    if (!localStorage.getItem('tagList')) {
+      this.getTagsFromLocal(JSON.parse(localStorage.getItem('tagsList')))
+    }
     // 如果当前打开页面不在标签栏中，跳到homeName页
     if (!this.tagsList.find(item => item.link === this.$route.fullPath)) {
       this.$router.push('/home')

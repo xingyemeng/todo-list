@@ -153,7 +153,6 @@
       </g>
     </svg>
   </div>
-
 </template>
 
 <script>
@@ -162,18 +161,21 @@ export default {
   name: 'err-content',
   data () {
     return {
-      second: 5
+      second: 5,
+      key: ''
     }
   },
   methods: {
-    time () {
-      while (this.second !== 0) {
-        this.second--
+    timeMinus () {
+      this.second--
+      if (this.second === 0) {
+        clearInterval(this.key)
+        this.$router.go(-1)
       }
     }
   },
   mounted () {
-    setTimeout()
+    this.key = setInterval(this.timeMinus, 1000)
   }
 }
 </script>

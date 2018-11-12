@@ -43,7 +43,7 @@ export default {
     }
   },
   methods: {
-    scrollLeft () {
+    scrollRight () {
       let divScrool = this.$refs.scrollWrap
       let divGroup = this.$refs.scrollGroup
       let wGroup = divGroup.offsetWidth
@@ -57,7 +57,7 @@ export default {
         }
       }
     },
-    scrollRight () {
+    scrollLeft () {
       if (this.left < 0) {
         if ((this.left + this.speed) < 0) {
           this.left += this.speed
