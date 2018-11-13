@@ -19,7 +19,7 @@
     </div>
     <div class="tags-group" ref="scrollGroup">
       <div class="scroll-wrap" ref="scrollWrap" :style="{left: left+'px'}">
-        <Tag v-for="item in list" :key="item.link" :color="$route.fullPath === item.link ? 'primary' : ''" type="dot" :closable="item.link != '/home'" @click.native="handleClickTag(item.link)" @on-close="handleCloseTag(item.link)">{{item.name}}</Tag>
+        <Tag ref="tagDiv" v-for="item in list" :key="item.link" :color="$route.fullPath === item.link ? 'primary' : ''" type="dot" :closable="item.link != '/home'" @click.native="handleClickTag(item.link)" @on-close="handleCloseTag(item.link)">{{item.name}}</Tag>
       </div>
     </div>
   </div>
@@ -40,6 +40,28 @@ export default {
       default: function () {
         return []
       }
+    }
+  },
+  watch: {
+  /*  监听list失败了，因为$refs是非响应的
+    list: function () {
+      let outWidth = this.$refs.scrollGroup.offsetWidth
+      let scrollWidth = this.$refs.scrollWrap.offsetWidth
+      this.$nextTick(() => {
+        if (scrollWidth > outWidth) {
+          let index = this.$refs.tagDiv.findIndex(item => {
+            return item.color === 'primary'
+          })
+          console.log(this.$refs.tagDiv)
+          console.log(index)
+          console.log(this.$refs.tagDiv[index].$el)
+          let currentLeft = this.$refs.tagDiv[index].$el.offsetLeft
+          console.log(currentLeft)
+        }
+      })
+    } */
+    '$route' (to) {
+      
     }
   },
   methods: {

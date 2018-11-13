@@ -48,6 +48,7 @@ import tagNav from './tagNav/tagNav'
 import minLogo from '../assets/images/logo-min.jpg'
 import maxLogo from '../assets/images/logo.jpg'
 import conf from '@/config/conf'
+import {removeLocalStorage} from '@/libs/util.js'
 
 export default {
   name: 'Main',
@@ -102,6 +103,7 @@ export default {
       let index = this.tagsList.findIndex(function (item, index) {
         return item.link === tagLink
       })
+      removeLocalStorage(index, 'this')
       // 检测改标签是否是打开状态
       if (this.tagsList[index].link === this.$route.fullPath) {
         this.tagsList.splice(index, 1)
@@ -124,9 +126,11 @@ export default {
         let index = this.tagsList.findIndex(function (item, index) {
           return item.link === link
         })
+        removeLocalStorage(index, 'others')
         const arr = this.tagsList.splice(index, 1)
         this.tagsList.splice(1, this.tagsList.length - 1, arr[0])
       } else {
+        removeLocalStorage()
         this.tagsList.splice(1, this.tagsList.length - 1)
         this.$router.push('/home')
       }
@@ -151,8 +155,7 @@ export default {
   },
   mounted () {
     // 从localStorage获取tagsList
-    // localStorage.removeItem('tagsList')
-    if (!localStorage.getItem('tagList')) {
+    if (JSON.parse(localStorage.getItem('tagsList')) !== null) {
       this.getTagsFromLocal(JSON.parse(localStorage.getItem('tagsList')))
     }
     // 如果当前打开页面不在标签栏中，跳到homeName页

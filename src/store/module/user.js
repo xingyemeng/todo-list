@@ -26,7 +26,6 @@ export default {
         login(userName, password).then(result => {
           if (result.data.code === 200) {
             const data = result.data
-            console.log(data.token)
             commit('setToken', data.token)
             resolve()
           } else {
@@ -39,7 +38,6 @@ export default {
       return new Promise((resolve, reject) => {
         getUserInfo(state.token).then(res => {
           let data = res.data
-          console.log(data)
           commit('setAccess', data.access)
           commit('setUserName', data.userName)
           resolve(data)

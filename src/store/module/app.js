@@ -1,6 +1,6 @@
 import axios from 'axios'
 import routes from '../../router/route'
-import { getNavListByRoutes, setLocalStorage, getLocalStorage} from '../../libs/util'
+import {getNavListByRoutes, setLocalStorage} from '../../libs/util'
 
 export default {
   state: {
@@ -48,7 +48,6 @@ export default {
     addTagsList (state, item) {
       state.tagsList.push(item)
       setLocalStorage(item)
-      console.log(JSON.parse(localStorage.getItem('tagsList')))
     },
     getTagsFromLocal (state, arr) {
       state.tagsList.push(...arr)
@@ -111,7 +110,6 @@ export default {
         url: '/api/things/createThing',
         data: data.things
       }).then(response => {
-        console.log(response)
         data.ctx.$Message.success('Success!')
         data.ctx.loading = 'none'
         data.ctx.$refs[data.name].resetFields()

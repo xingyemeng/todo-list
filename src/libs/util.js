@@ -53,26 +53,25 @@ export const getNavListByRoutes = (list, access) => {
 /**
  * 标签栏写入localStorage
  * */
-const arr = JSON.parse(localStorage.getItem('tagsList'))
+const arr = JSON.parse(localStorage.getItem('tagsList')) ? JSON.parse(localStorage.getItem('tagsList')) : []
 export const setLocalStorage = (item) => {
   arr.push(item)
-  console.log(arr)
   localStorage.setItem('tagsList', JSON.stringify(arr))
 }
-
-
 export const getLocalStorage = () => {
   return JSON.parse(localStorage.getItem('tagsList'))
 }
-
-
-
-
-
-
-
-
-
-
-
-
+/**
+ * 标签导航关闭时操作localStorage
+ * @str 'this'关闭指定  'others' 关闭其他  空 关闭全部（直接删除tagsList这个Storage属性）
+ * */
+export const removeLocalStorage = (index, str) => {
+  let arr1 = arr.splice(index - 1, 1)
+  if (str === 'this') {
+    localStorage.setItem('tagsList', JSON.stringify(arr))
+  } else if (str === 'others') {
+    localStorage.setItem('tagsList', JSON.stringify(arr1))
+  } else {
+    localStorage.removeItem('tagsList')
+  }
+}

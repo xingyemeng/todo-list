@@ -27,7 +27,6 @@ router.beforeEach((to, from, next) => {
     // 已登录进入登录界面
     next(HomePage)
   } else {
-    console.log(store.state.user.access.length)
     // 判断是否已经获取用户信息
     if (store.state.user.access.length !== 0) {
       next()
