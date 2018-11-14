@@ -33,8 +33,11 @@
         <div class="tags-nav">
           <tag-nav :list="tagsList" @on-close="closeTag" @close-tag="closeMoreTag"></tag-nav>
         </div>
-        <Content :style="{background: '#fff', minHeight: '260px'}">
-          <router-view></router-view>
+        <Content :style="{background: '#fff', minHeight: '260px', padding: '20px'}">
+          <keep-alive>
+            <router-view v-if="$route.meta.keepAlive"></router-view>
+          </keep-alive>
+          <router-view v-if="!$route.meta.keepAlive"></router-view>
         </Content>
       </Layout>
     </Layout>

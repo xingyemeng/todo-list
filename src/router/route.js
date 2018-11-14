@@ -11,6 +11,7 @@ import login from '../components/login/login'
  *    hideInMenu: 是否在左侧导航栏隐藏
  *    showAlways：设为true时，子节点长度为1的栏目不会设为下拉样式
  *    icon：icon图标
+ *    keepAlive: 是否缓存页面
  *
  * note: 只有一个子栏目的权限字段放在父路由的meta内
  * */
@@ -28,6 +29,7 @@ export default [
   {
     path: '/',
     component: Main,
+    name: '_home',
     meta: {
       hideInMenu: true
     },
@@ -56,9 +58,10 @@ export default [
         name: 'work-page',
         meta: {
           title: '工单提交',
-          icon: 'ios-document'
+          icon: 'ios-document',
+          keepAlive: true
         },
-        component: todoHome
+        component: () => import('@/view/workPost/workPost')
       }
     ]
   },
@@ -79,7 +82,7 @@ export default [
           icon: 'md-menu',
           title: '查看工单'
         },
-        component: () => import('../components/works/workview')
+        component: () => import('@/components/works/workview')
       },
       {
         path: 'errwork',

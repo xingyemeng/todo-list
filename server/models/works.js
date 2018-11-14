@@ -11,9 +11,8 @@ let Schema = mongoose.Schema;
 *
 * */
 const worksSchema = new Schema({
-  id: Number,
   title: String,
-  text: String,
+  content: String,
   done: {
     type: Boolean,
     default: false
@@ -21,7 +20,7 @@ const worksSchema = new Schema({
   rate: Number,
   flag: {
     type: Boolean,
-    default: true
+    default: false
   },
   time: {
     type: Date,
@@ -33,7 +32,6 @@ const worksSchema = new Schema({
   getter: String
 })
 Works = mongoose.model('works', worksSchema);
-
 
 module.exports = Works
 /*const arr = [

@@ -19,7 +19,7 @@
     </div>
     <div class="tags-group" ref="scrollGroup">
       <div class="scroll-wrap" ref="scrollWrap" :style="{left: left+'px'}">
-        <Tag ref="tagDiv" v-for="item in list" :key="item.link" :color="$route.fullPath === item.link ? 'primary' : ''" type="dot" :closable="item.link != '/home'" @click.native="handleClickTag(item.link)" @on-close="handleCloseTag(item.link)">{{item.name}}</Tag>
+        <Tag ref="tagDiv" :name="item.rName" v-for="item in list" :key="item.link" :color="$route.fullPath === item.link ? 'primary' : ''" type="dot" :closable="item.link != '/home'" @click.native="handleClickTag(item.link)" @on-close="handleCloseTag(item.link)">{{item.name}}</Tag>
       </div>
     </div>
   </div>
@@ -61,7 +61,14 @@ export default {
       })
     } */
     '$route' (to) {
-      
+      this.$nextTick(function () {
+        this.$refs.tagDiv.forEach((item, index) => {
+          if (item.name === to.name) {
+            let tag = this.$refs.tagDiv[index].$el
+            this.moveTag(tag)
+          }
+        })
+      })
     }
   },
   methods: {
@@ -96,6 +103,20 @@ export default {
     },
     handleCloseMoreTag (item) {
       return this.$emit('close-tag', item)
+    },
+    moveTag (tag) {
+      let outWidth = this.$refs.scrollGroup.offsetWidth
+      let scrollWidth = this.$refs.scrollWrap.offsetWidth
+      let tagOffsetLeft = tag.offsetLeft
+      let tagWidth = tag.offsetWidth
+      let _r = (tagOffsetLeft + this.left + tagWidth) - outWidth
+      if (outWidth > scrollWidth) {
+        this.left = 0
+      } else if (tagOffsetLeft < -this.left) {
+        this.left += (-this.left - tagOffsetLeft)
+      } else if (_r > 0) {
+        this.left -= _r
+      }
     }
   }
 }
