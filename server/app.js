@@ -44,12 +44,25 @@ app.use(session({
   }
 })*/
 
+app.all('*', function (req, res, next) {
+  store.length(function (err, len) {
+    console.log(len)
+    if (len) {
+      store.get(req.sessionID, function (err, session) {
+        console.log(session)
+      })
+    }
+  })
+  next()
+})
+
 mongoose.connect('mongodb://localhost:27017/todolist',{useNewUrlParser: true},function (err) {
   global.acl = new nodeAcl(new nodeAcl.mongodbBackend(mongoose.connection.db), logger());
   global.acl.allow(acl_conf)
+
   /*global.acl.addRoleParents('semadmin','semuser', function (err) {
-    if(err) console.error(err)
-  })
+
+  })if(err) console.error(err)
   global.acl.addRoleParents('tecadmin','tecuser', function (err) {
     if(err) console.error(err)
   })
@@ -65,7 +78,7 @@ mongoose.connect('mongodb://localhost:27017/todolist',{useNewUrlParser: true},fu
   app.get( '/allow/:user/:role', function( request, response, next ) {
     Users.findOne({name: request.params.user}, function (err ,user) {
       if (err) console.error(err)
-      acl.addUserRoles( user._id.toString(), request.params.role );
+      acl.addUserRoles( user._id.toString(), request.params.role);
       response.send( request.params.user + ' is a ' + request.params.role );
     })
   });
@@ -77,7 +90,7 @@ mongoose.connect('mongodb://localhost:27017/todolist',{useNewUrlParser: true},fu
     })
   });
   app.use('/admin', require('./router/login'));
-  app.use('/worklist', require('./router/works'));
+  app.use('/work', require('./router/works'));
   app.use('/waitui', require('./router/spbaidu/spbaidu'));
   app.listen(8081);
 });

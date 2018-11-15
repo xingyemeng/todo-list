@@ -82,7 +82,7 @@ export default [
           icon: 'md-menu',
           title: '查看工单'
         },
-        component: () => import('@/components/works/workview')
+        component: () => import('@/view/workView/workView')
       },
       {
         path: 'errwork',

@@ -1,6 +1,7 @@
 import axios from 'axios'
 import routes from '../../router/route'
 import {getNavListByRoutes, setLocalStorage} from '../../libs/util'
+import {postWork, getWorkList} from '../../api/works'
 
 export default {
   state: {
@@ -46,8 +47,22 @@ export default {
     handlePostWork ({state, commit}, data) {
       return new Promise((resolve, reject) => {
         if (!data) {
-          console.error('提交失败，未获取到数据')
+          console.log('提交失败，未获取到数据')
+          return
         }
+        postWork(data).then(res => {
+          resolve(res)
+        }).catch(err => {
+          console.log('axios返回值出错' + err)
+          reject(err)
+        })
+      })
+    },
+    handleGetWorkList ({state, commit}) {
+      getWorkList().then(res => {
+        console.log(res)
+      }).catch(err => {
+        console.error(err)
       })
     }
   }

@@ -27,6 +27,7 @@
 
 <script>
 import E from 'wangeditor'
+import { mapActions } from 'vuex'
 export default {
   name: 'workPost',
   data () {
@@ -54,6 +55,7 @@ export default {
     }
   },
   methods: {
+    ...mapActions(['handlePostWork']),
     handleSubmit () {
       if (this.formData.content === '') {
         this.$Message.error('内容不能为空!')
@@ -61,8 +63,13 @@ export default {
       }
       this.$refs.worksForm.validate(valid => {
         if (valid) {
-          console.log(this.formData)
-          this.$Message.success('Success!')
+          this.handlePostWork(this.formData).then(res => {
+            console.log(res)
+            this.$Message.success('工单' + res.data + '提交成功')
+          }).catch(err => {
+            console.error(err)
+            this.$Message.error(err)
+          })
         } else {
           this.$Message.error('Fail!')
         }
