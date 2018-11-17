@@ -15,7 +15,8 @@ export default {
     worksList: []
   },
   getters: {
-    navList: (state, getters, rootState) => getNavListByRoutes(routes, rootState.user.access)
+    navList: (state, getters, rootState) => getNavListByRoutes(routes, rootState.user.access),
+    worksList: (state) => state.worksList
   },
   mutations: {
     addTagsList (state, item) {
@@ -26,7 +27,7 @@ export default {
       state.tagsList.push(...arr)
     },
     setWorksList (state, arr) {
-      state.worksList.push(...arr)
+      state.worksList = arr
     }
   },
   actions: {
@@ -60,7 +61,8 @@ export default {
     },
     handleGetWorkList ({state, commit}) {
       getWorkList().then(res => {
-        console.log(res)
+        console.log(res.data)
+        commit('setWorksList', res.data)
       }).catch(err => {
         console.error(err)
       })

@@ -7,6 +7,11 @@ export const setToken = (token) => {
   Cookies.set(TOKEN_KEY, token, {expires: 1})
 }
 
+export const destorySession = () => {
+  Cookies.set('connect.sid', '')
+  localStorage.removeItem('tagsList')
+}
+
 export const getToken = () => {
   const token = Cookies.get(TOKEN_KEY)
   if (token) return token
@@ -33,6 +38,7 @@ export const hasOneOf = (targetarr, arr) => {
  * @author xingyemeng
  * */
 export const getNavListByRoutes = (list, access) => {
+  console.log(access)
   let arr = []
   forEach(list, item => {
     if (!item.meta || (item.meta && !item.meta.hideInMenu)) {

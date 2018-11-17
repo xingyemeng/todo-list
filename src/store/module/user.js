@@ -1,11 +1,12 @@
 import { login, getUserInfo } from '@/api/user'
-import { setToken, getToken } from '@/libs/util'
+import { setToken, getToken, destorySession } from '@/libs/util'
 
 export default {
   state: {
     access: '',
     token: getToken(),
-    userName: ''
+    userName: '',
+    userGroup: ''
   },
   mutations: {
     setToken (state, token) {
@@ -17,6 +18,9 @@ export default {
     },
     setUserName (state, name) {
       state.userName = name
+    },
+    setUserGroup (state, group) {
+      state.userGroup = group
     }
   },
   actions: {
@@ -37,9 +41,12 @@ export default {
     getUserInfo ({state, commit}) {
       return new Promise((resolve, reject) => {
         getUserInfo(state.token).then(res => {
+          console.log(res)
           let data = res.data
+          console.log(data)
           commit('setAccess', data.access)
           commit('setUserName', data.userName)
+          commit('setUserGroup', data.userGroup)
           resolve(data)
         }).catch(err => {
           console.error(err)
@@ -48,6 +55,7 @@ export default {
     },
     userLogout ({commit}) {
       return new Promise((resolve, reject) => {
+        destorySession()
         commit('setToken', '')
         commit('setAccess', [])
         resolve()

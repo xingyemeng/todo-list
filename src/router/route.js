@@ -69,7 +69,7 @@ export default [
     path: '/work',
     name: 'work',
     meta: {
-      access: ['semuser'],
+      access: ['semuser', 'semadmin'],
       icon: 'md-menu',
       title: '竞价'
     },
@@ -134,7 +134,7 @@ export default [
           icon: 'md-menu',
           title: '查看工单'
         },
-        component: doneThings
+        component: () => import('@/view/workView/workView')
       },
       {
         path: 'groupwork',

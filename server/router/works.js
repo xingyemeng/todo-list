@@ -27,12 +27,11 @@ router.post('/postwork', function (req, res) {
 })
 router.get('/worklist', function (req, res) {
   const userId = req.session.userid
-  console.log(req.session)
   UsersController.getUserInfo(userId)
     .then(result => {
       WorksController.getWorkList(result)
         .then(function (result) {
-          console.log(result)
+          res.send(result)
         })
     }).catch(err => {
       console.error(err)

@@ -12,8 +12,8 @@
       </FormItem>
       <FormItem label="对应技术：" prop="getter">
         <Select v-model="formData.getter" placeholder="请选择" style="width:200px">
-          <Option value="张三">张三</Option>
-          <Option value="shanghai">London</Option>
+          <Option value="杨少鑫">杨少鑫</Option>
+          <Option value="杨">杨</Option>
           <Option value="shenzhen">Sydney</Option>
         </Select>
       </FormItem>
@@ -39,7 +39,8 @@ export default {
         date: '',
         getter: '',
         author: this.$store.state.user.userName,
-        time: new Date()
+        time: new Date(),
+        group: this.$store.state.user.userGroup
       },
       ruleData: {
         title: [

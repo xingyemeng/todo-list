@@ -38,7 +38,8 @@ router.post('/getUserInfo', function (req, res) {
       if(err) console.error(err)
       res.send({
         userName: user.name,
-        access: roles
+        access: roles,
+        userGroup: user.group
       })
     })
   })
