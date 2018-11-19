@@ -37,4 +37,32 @@ router.get('/worklist', function (req, res) {
       console.error(err)
   })
 })
+router.post('/verifywork/:flag', function (req, res) {
+  const flag = req.params.flag
+  const id = req.body._id
+  if (flag === 'success') {
+    Works.findOneAndUpdate({_id: id}, {flag: true}, function (err, item) {
+      if (err) console.error(err)
+      res.send(item.title)
+    })
+  }
+  if (flag === 'fail') {
+    Works.where({_id: id}).update({fail: true, $push: {comments: {comment: req.body.comments.comment, data: Date(req.body.comments.data)}}}, function (err, item) {
+      if (err) console.error(err)
+      res.send(item.title)
+    })
+  }
+}),
+router.get('/failwork', function (req, res) {
+  const userId = req.session.userid
+  UsersController.getUserInfo(userId)
+    .then(result => {
+      WorksController.getFailwork(result)
+        .then(function (result) {
+          res.send(result)
+        })
+    }).catch(err => {
+    console.error(err)
+  })
+})
 module.exports = router;

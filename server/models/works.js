@@ -8,6 +8,8 @@ let Schema = mongoose.Schema;
 * group: 工单所属组
 * author: 提交人
 * getter: 对应的技术
+* fail: 是否被驳回
+* comment： 驳回理由
 *
 * */
 const worksSchema = new Schema({
@@ -35,7 +37,12 @@ const worksSchema = new Schema({
     default: 'admin'
   },
   author: String,
-  getter: String
+  getter: String,
+  comments: [{}],
+  fail: {
+    type: Boolean,
+    default: false
+  }
 })
 Works = mongoose.model('works', worksSchema);
 

@@ -41,9 +41,7 @@ export default {
     getUserInfo ({state, commit}) {
       return new Promise((resolve, reject) => {
         getUserInfo(state.token).then(res => {
-          console.log(res)
           let data = res.data
-          console.log(data)
           commit('setAccess', data.access)
           commit('setUserName', data.userName)
           commit('setUserGroup', data.userGroup)

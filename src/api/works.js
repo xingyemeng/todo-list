@@ -16,3 +16,24 @@ export const getWorkList = function () {
     method: 'get'
   })
 }
+/**
+ * 工单审核
+ * */
+export const verifyWork = function (data) {
+  return axios({
+    url: '/api/work/verifywork/' + data.param,
+    data,
+    method: 'post'
+  })
+}
+
+/**
+ * 获取已驳回的工单
+ * */
+export const getFailWork = function (data) {
+  return axios({
+    url: '/api/work/failwork',
+    data,
+    method: 'get'
+  })
+}

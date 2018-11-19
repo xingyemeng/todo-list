@@ -31,6 +31,14 @@ router.post('/login', function (req, res) {
   })
 });
 router.post('/getUserInfo', function (req, res) {
+  if (typeof req.session.userid === 'undefined') {
+    const data = {
+      code: 500,
+      msg: '登录超时，请重新登录'
+    }
+    res.send(data)
+    return
+  }
   let data = req.body;
   Users.findById({_id: data.userId}, function (err, user) {
     if(err) console.error(err)

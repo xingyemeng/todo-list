@@ -1,11 +1,11 @@
 <template>
   <div class="workview">
-    <Table border :columns="columns7" :data="worksList"></Table>
+    <Table border :columns="columns7" :data="$store.state.app.worksList"></Table>
   </div>
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex'
+import { mapActions } from 'vuex'
 export default {
   name: 'workView',
   data () {
@@ -26,11 +26,11 @@ export default {
           }
         },
         {
-          title: 'author',
+          title: '提交人',
           key: 'author'
         },
         {
-          title: 'getter',
+          title: '技术',
           key: 'getter'
         },
         {
@@ -71,9 +71,6 @@ export default {
       ]
     }
   },
-  computed: {
-    ...mapGetters(['worksList'])
-  },
   methods: {
     ...mapActions(['handleGetWorkList']),
     show (index) {
@@ -81,9 +78,6 @@ export default {
         title: 'User Info',
         content: `Name：${this.worksList[index].title}<br>内容：${this.worksList[index].content}`
       })
-    },
-    remove (index) {
-      this.data6.splice(index, 1)
     }
   },
   mounted () {

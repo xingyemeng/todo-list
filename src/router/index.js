@@ -2,7 +2,7 @@ import Vue from 'vue'
 import iView from 'iview'
 import VueRouter from 'vue-router'
 import routes from './route'
-import { getToken } from '@/libs/util'
+import { getToken, setToken } from '@/libs/util'
 import store from '@/store'
 
 Vue.use(VueRouter)
@@ -33,6 +33,10 @@ router.beforeEach((to, from, next) => {
     } else {
       // 已登录进入首页，此时调用getUserInfo
       store.dispatch('getUserInfo').then(res => {
+        // 后台服务器给的cookie在浏览器关闭后会过期，为了保持同步把浏览器本地的cookie也删除
+        if (res.code === 500) {
+          setToken('')
+        }
         next()
       })
     }

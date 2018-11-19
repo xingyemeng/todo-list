@@ -1,7 +1,7 @@
 import axios from 'axios'
 import routes from '../../router/route'
 import {getNavListByRoutes, setLocalStorage} from '../../libs/util'
-import {postWork, getWorkList} from '../../api/works'
+import {postWork, getWorkList, verifyWork, getFailWork} from '../../api/works'
 
 export default {
   state: {
@@ -12,11 +12,19 @@ export default {
         rName: 'home'
       }
     ],
-    worksList: []
+    worksList: [],
+    failWork: []
   },
   getters: {
     navList: (state, getters, rootState) => getNavListByRoutes(routes, rootState.user.access),
-    worksList: (state) => state.worksList
+    verifyWorksList: (state) => {
+      return state.worksList.filter(item => {
+        return item.flag === false
+      })
+    },
+    failWorksList: (state) => {
+      return state.failWork
+    }
   },
   mutations: {
     addTagsList (state, item) {
@@ -61,8 +69,23 @@ export default {
     },
     handleGetWorkList ({state, commit}) {
       getWorkList().then(res => {
-        console.log(res.data)
         commit('setWorksList', res.data)
+      }).catch(err => {
+        console.error(err)
+      })
+    },
+    handleVerifyWork (context, data) {
+      return new Promise((resolve, reject) => {
+        verifyWork(data).then(res => {
+          resolve(res.data)
+        }).catch(err => {
+          reject(err)
+        })
+      })
+    },
+    handleFailWorksList ({state}, data) {
+      getFailWork(data).then(res => {
+        state.failWork = res.data
       }).catch(err => {
         console.error(err)
       })

@@ -1,13 +1,11 @@
 <template>
-  <div class="workview">
-    <Table border :columns="columns7" :data="worksList"></Table>
-  </div>
+  <Table border :columns="columns7" :data="failWorksList"></Table>
 </template>
 
 <script>
 import { mapActions, mapGetters } from 'vuex'
 export default {
-  name: 'workView',
+  name: 'failWork',
   data () {
     return {
       columns7: [
@@ -26,17 +24,28 @@ export default {
           }
         },
         {
-          title: 'author',
-          key: 'author'
-        },
-        {
-          title: 'getter',
-          key: 'getter'
+          title: 'reason',
+          key: 'comments',
+          render: (h, params) => {
+            const options = params.row.comments.map((item) => {
+              console.log(typeof item.data)
+              let year = new Date(item.data).getFullYear()
+              let month = new Date(item.data).getMonth()
+              let day = new Date(item.data).getDate()
+              let hour = new Date(item.data).getHours()
+              let minutes = new Date(item.data).getMinutes()
+              let second = new Date(item.data).getSeconds()
+              let date = year + '/' + month + '/' + day
+              let time = hour + ':' + minutes + ':' + second
+              return <p><i>时间：{date} &nbsp;{time}</i><br/>驳回理由：{item.comment}</p>
+            })
+            return (<div >{options}</div>)
+          }
         },
         {
           title: 'Action',
           key: 'action',
-          width: 150,
+          width: 180,
           align: 'center',
           render: (h, params) => {
             return h('div', [
@@ -53,18 +62,18 @@ export default {
                     this.show(params.index)
                   }
                 }
-              }, 'View'),
+              }, '查看'),
               h('Button', {
                 props: {
-                  type: 'error',
+                  type: 'primary',
                   size: 'small'
                 },
                 on: {
                   click: () => {
-                    this.remove(params.index)
+                    this.show(params.index)
                   }
                 }
-              }, 'Delete')
+              }, '删除')
             ])
           }
         }
@@ -72,22 +81,19 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['worksList'])
+    ...mapGetters(['failWorksList'])
   },
   methods: {
-    ...mapActions(['handleGetWorkList']),
+    ...mapActions(['handleFailWorksList']),
     show (index) {
       this.$Modal.info({
         title: 'User Info',
-        content: `Name：${this.worksList[index].title}<br>内容：${this.worksList[index].content}`
+        content: `Name：${this.failWorksList[index].title}<br>内容：${this.failWorksList[index].content}`
       })
-    },
-    remove (index) {
-      this.data6.splice(index, 1)
     }
   },
   mounted () {
-    this.handleGetWorkList()
+    this.handleFailWorksList()
   }
 }
 </script>

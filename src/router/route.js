@@ -1,5 +1,4 @@
 import undoneThings from '../components/undoneThings'
-import deleteThingsList from '../components/deleteThingsList'
 import doneThings from '../components/doneThings'
 import todoHome from '../components/todoHome'
 import Main from '../components/main'
@@ -92,7 +91,7 @@ export default [
           title: '不合格工单',
           showAlways: true
         },
-        component: deleteThingsList
+        component: () => import('@/view/failWork/failWork')
       },
       {
         path: 'workverify',
@@ -102,7 +101,7 @@ export default [
           icon: 'md-menu',
           title: '工单审核'
         },
-        component: doneThings
+        component: () => import('@/view/workVerify/workVerify')
       },
       {
         path: 'groupwork',
