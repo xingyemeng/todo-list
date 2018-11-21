@@ -95,6 +95,8 @@ export default {
     handleUserLogout () {
       this.userLogout().then(res => {
         this.$router.push({name: this.conf.LoginPage})
+        // 退出用户store的状态会缓存起来，以至于下一个用户登录可以看到上一个用户的tagsList标签
+        this.$router.go(0)
       })
     },
     closeTag (tagLink) {

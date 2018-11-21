@@ -1,5 +1,5 @@
 import { login, getUserInfo } from '@/api/user'
-import { setToken, getToken, destorySession } from '@/libs/util'
+import { setToken, getToken } from '@/libs/util'
 
 export default {
   state: {
@@ -53,7 +53,6 @@ export default {
     },
     userLogout ({commit}) {
       return new Promise((resolve, reject) => {
-        destorySession()
         commit('setToken', '')
         commit('setAccess', [])
         resolve()

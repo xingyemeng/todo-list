@@ -1,7 +1,7 @@
 import axios from 'axios'
 import routes from '../../router/route'
 import {getNavListByRoutes, setLocalStorage} from '../../libs/util'
-import {postWork, getWorkList, verifyWork, getFailWork} from '../../api/works'
+import {postWork, getWorkList, verifyWork, getFailWork, getWorkCount} from '../../api/works'
 
 export default {
   state: {
@@ -13,7 +13,8 @@ export default {
       }
     ],
     worksList: [],
-    failWork: []
+    failWork: [],
+    workCount: 0
   },
   getters: {
     navList: (state, getters, rootState) => getNavListByRoutes(routes, rootState.user.access),
@@ -24,6 +25,12 @@ export default {
     },
     failWorksList: (state) => {
       return state.failWork
+    },
+    worksList: (state) => {
+      return state.worksList
+    },
+    workCount: (state) => {
+      return state.workCount
     }
   },
   mutations: {
@@ -36,6 +43,9 @@ export default {
     },
     setWorksList (state, arr) {
       state.worksList = arr
+    },
+    setWorkCount (state, num) {
+      state.workCount = num
     }
   },
   actions: {
@@ -67,8 +77,11 @@ export default {
         })
       })
     },
-    handleGetWorkList ({state, commit}) {
-      getWorkList().then(res => {
+    /**
+     * @params data {pNum, pCount} 当前页码和当前页展示条数
+     * */
+    handleGetWorkList ({state, commit}, data) {
+      getWorkList(data).then(res => {
         commit('setWorksList', res.data)
       }).catch(err => {
         console.error(err)
@@ -86,6 +99,13 @@ export default {
     handleFailWorksList ({state}, data) {
       getFailWork(data).then(res => {
         state.failWork = res.data
+      }).catch(err => {
+        console.error(err)
+      })
+    },
+    handleWorkCount ({commit}) {
+      getWorkCount().then(res => {
+        commit('setWorkCount', res.data.count)
       }).catch(err => {
         console.error(err)
       })

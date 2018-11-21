@@ -4,12 +4,10 @@ import { forEach } from './tools'
 export const TOKEN_KEY = 'mytoken'
 
 export const setToken = (token) => {
+  if (token === '') {
+    localStorage.clear()
+  }
   Cookies.set(TOKEN_KEY, token, {expires: 1})
-}
-
-export const destorySession = () => {
-  Cookies.set('connect.sid', '')
-  localStorage.removeItem('tagsList')
 }
 
 export const getToken = () => {

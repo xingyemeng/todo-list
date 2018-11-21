@@ -2,7 +2,7 @@ const aclconf = [
   {
     roles:['semuser'],
     allows:[
-      {resources: [ '/work/view', '/work/errwork', '/work/work-page' ], permissions:'*'}
+      {resources: [ '/work/view', '/work/failwork', '/work/postwork' ], permissions:'*'}
     ]
   },
   {
@@ -14,7 +14,7 @@ const aclconf = [
   {
     roles:['semadmin'],
     allows:[
-      {resources: [ '/work/verify', '/work/group' ], permissions:'*'}
+      {resources: [ '/work/verifywork', '/work/group' ], permissions:'*'}
     ]
   },
   {

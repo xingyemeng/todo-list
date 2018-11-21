@@ -3,12 +3,9 @@ const WorksController = require('../controller/works')
 const UsersController = require('../controller/user')
 let router = express.Router();
 
-/*function getUserId(req, res){
+function getUserId(req, res){
   return req.session.userid
 }
-router.all('*', global.acl.middleware( 1, getUserId ),function (req,res,next) {
-  next()
-})*/
 
 router.get('/view', function(req, res) {
   Works.find({flag: true}, function(err, works){
@@ -16,7 +13,7 @@ router.get('/view', function(req, res) {
     res.send(works);
   })
 });
-router.post('/postwork', function (req, res) {
+router.post('/postwork', global.acl.middleware( 2, getUserId ), function (req, res) {
   const workData = req.body
   WorksController.createOne(workData).then(result => {
     res.send(result.title)
@@ -25,11 +22,13 @@ router.post('/postwork', function (req, res) {
     res.send('提交工单出错：' + err)
   })
 })
-router.get('/worklist', function (req, res) {
+router.get('/worklist/:pNum/:pCount', function (req, res) {
   const userId = req.session.userid
+  const pNum = req.params.pNum
+  const pCount = req.params.pCount
   UsersController.getUserInfo(userId)
     .then(result => {
-      WorksController.getWorkList(result)
+      WorksController.getWorkList(result, pNum, pCount)
         .then(function (result) {
           res.send(result)
         })
@@ -37,7 +36,19 @@ router.get('/worklist', function (req, res) {
       console.error(err)
   })
 })
-router.post('/verifywork/:flag', function (req, res) {
+router.get('/workcount', function (req, res) {
+  const userId = req.session.userid
+  UsersController.getUserInfo(userId)
+    .then(result => {
+      WorksController.getWorkCount(result)
+        .then(function (result) {
+          res.send({count: result})
+        })
+    }).catch(err => {
+    console.error(err)
+  })
+})
+router.post('/verifywork/:flag', global.acl.middleware( 2, getUserId ), function (req, res) {
   const flag = req.params.flag
   const id = req.body._id
   if (flag === 'success') {

@@ -1,11 +1,17 @@
 <template>
-  <Table border :columns="columns7" :data="verifyWorksList"></Table>
+  <div>
+    <Table border :columns="columns7" :data="verifyWorksList"></Table>
+    <Page :total="workCount" :style="{margin: '20px 0'}" size="small" show-elevator show-sizer @on-change="pNumChange" @on-page-size-change="pCountChange"/>
+  </div>
 </template>
 
 <script>
 import { mapActions, mapGetters } from 'vuex'
+import mixin from '../mixin/work'
+
 export default {
   name: 'workVerify',
+  mixins: [mixin],
   data () {
     return {
       comments: {
@@ -122,7 +128,7 @@ export default {
                         }
                         this.handleVerifyWork(data).then(res => {
                           this.$Message.success(res + '已被驳回')
-                          this.handleGetWorkList()
+                          this.handleGetWorkList(this.page)
                         }).catch(err => {
                           this.$Message.error(err)
                         })
@@ -141,7 +147,7 @@ export default {
     ...mapGetters(['verifyWorksList'])
   },
   methods: {
-    ...mapActions(['handleGetWorkList', 'handleVerifyWork']),
+    ...mapActions(['handleGetWorkList', 'handleWorkCount']),
     show (index) {
       this.$Modal.info({
         title: 'User Info',
@@ -151,9 +157,6 @@ export default {
     remove (index) {
       this.data6.splice(index, 1)
     }
-  },
-  mounted () {
-    this.handleGetWorkList()
   }
 }
 </script>

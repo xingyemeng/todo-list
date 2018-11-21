@@ -1,13 +1,17 @@
 <template>
   <div class="workview">
-    <Table border :columns="columns7" :data="$store.state.app.worksList"></Table>
+    <Table border :columns="columns7" :data="worksList"></Table>
+    <Page :total="workCount" :style="{margin: '20px 0'}" size="small" show-elevator show-sizer @on-change="pNumChange" @on-page-size-change="pCountChange"/>
   </div>
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
+import mixin from '../mixin/work'
+
 export default {
   name: 'workView',
+  mixins: [mixin],
   data () {
     return {
       columns7: [
@@ -53,35 +57,24 @@ export default {
                     this.show(params.index)
                   }
                 }
-              }, 'View'),
-              h('Button', {
-                props: {
-                  type: 'error',
-                  size: 'small'
-                },
-                on: {
-                  click: () => {
-                    this.remove(params.index)
-                  }
-                }
-              }, 'Delete')
+              }, '查看详细')
             ])
           }
         }
       ]
     }
   },
+  computed: {
+    ...mapGetters(['worksList'])
+  },
   methods: {
-    ...mapActions(['handleGetWorkList']),
+    ...mapActions(['handleGetWorkList', 'handleWorkCount']),
     show (index) {
       this.$Modal.info({
         title: 'User Info',
         content: `Name：${this.worksList[index].title}<br>内容：${this.worksList[index].content}`
       })
     }
-  },
-  mounted () {
-    this.handleGetWorkList()
   }
 }
 </script>

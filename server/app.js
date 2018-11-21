@@ -45,11 +45,6 @@ app.use(express.json());
   })
   next()
 })*/
-
-mongoose.connect('mongodb://localhost:27017/todolist',{useNewUrlParser: true}, function (err) {
-  global.acl = new nodeAcl(new nodeAcl.mongodbBackend(mongoose.connection.db), logger());
-  global.acl.allow(acl_conf)
-});
 const MongoStore = connectMongo(session);
 app.use(session({
   secret: 'keyboard cat',
@@ -57,6 +52,13 @@ app.use(session({
   saveUninitialized: true,
   store: new MongoStore({ mongooseConnection: mongoose.connection })
 }));
+mongoose.connect('mongodb://localhost:27017/todolist',{useNewUrlParser: true}, function (err) {
+  global.acl = new nodeAcl(new nodeAcl.mongodbBackend(mongoose.connection.db), logger());
+  global.acl.allow(acl_conf)
+  router(app);
+  app.listen(8081);
+});
+
 /*global.acl.addRoleParents('semadmin','semuser', function (err) {
 
 })if(err) console.error(err)
@@ -86,8 +88,7 @@ app.get( '/disallow/:user/:role', function( request, response, next ) {
     response.send( request.params.user + ' is not a ' + request.params.role );
   })
 });
-router(app);
-app.listen(8081);
+
 
 
 function logger() {
